@@ -54,7 +54,7 @@ foreach ($ids as $i => $dador) {
     $stmt->execute();
     $stmt->close();
 }
-
+//Comment
 $conn->close();
 
 echo "<h3>✓ Sorteo regenerado correctamente.</h3>
