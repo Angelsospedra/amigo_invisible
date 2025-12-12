@@ -1,84 +1,118 @@
 <?php
-
-include('conexion.php');
-
-$email = $_POST['email'] ?? '';
+session_start();
+include("conexion.php");
 
 $mensaje = "";
-$nombre_regalado = "";
 
-if ($email !== '') {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $sql = "SELECT * FROM participantes WHERE email = '$email'";
-    $resultados = $conn->query($sql);
+    $tipo = $_POST['tipo'];
 
-    if ($resultados && $resultados->num_rows > 0) {
+    // =========================
+    // LOGIN DE ADMINISTRADOR
+    // =========================
+    if ($tipo === "admin") {
 
-        $fila = $resultados->fetch_assoc();
-        $id = $fila['id'];
+        $admin_pass = "1234"; // Cambiar si quieres
 
-        $sql2 = "SELECT participantes.* FROM regalos 
-                 INNER JOIN participantes ON participantes.id = regalos.regalado 
-                 WHERE regalos.regalar = $id";
-        $resultados2 = $conn->query($sql2);
+        if ($_POST['password_admin'] === $admin_pass) {
 
-        if ($resultados2 && $resultados2->num_rows > 0) {
-
-            $fila2 = $resultados2->fetch_assoc();
-            $nombre_regalado = $fila2['nombre'];
-            $mensaje = "Tu amigo invisible es:";
+            $_SESSION['admin'] = true;
+            header("Location: panel_admin.php");
+            exit;
         } else {
-            $mensaje = "No tienes un amigo invisible asignado.";
+            $mensaje = "Contraseña de administrador incorrecta.";
         }
-
-    } else {
-        $mensaje = "El correo no existe en la base de datos.";
     }
 
-} else {
-    $mensaje = "Falta el email.";
+    // =========================
+    // LOGIN DE PARTICIPANTE
+    // =========================
+    if ($tipo === "participante") {
+
+        $email = $_POST['email'] ?? "";
+        $password = $_POST['password_participante'] ?? "";
+
+        // Buscar usuario por email
+        $stmt = $conn->prepare("SELECT * FROM participantes WHERE email = ? LIMIT 1");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+
+            $usuario = $result->fetch_assoc();
+
+            if (password_verify($password, $usuario['password'])) {
+
+                $_SESSION['participante_id'] = $usuario['id'];
+                header("Location: panel.php");
+                exit;
+            } else {
+                $mensaje = "Contraseña incorrecta.";
+            }
+        } else {
+            $mensaje = "No existe un usuario con ese correo.";
+        }
+
+        $stmt->close();
+    }
 }
-
 ?>
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Resultado Amigo Invisible</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            background: #eef2f3;
-        }
-        .resultado-card {
-            max-width: 450px;
-            margin: 80px auto;
-            padding: 25px;
-            border-radius: 12px;
-            background: white;
-            box-shadow: 0 0 18px rgba(0,0,0,0.12);
-        }
-        .nombre-amigo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #0d6efd;
-        }
-    </style>
-</head>
 <body>
 
-<div class="resultado-card text-center">
-    <h3 class="mb-3"><?php echo $mensaje; ?></h3>
+    <div class="container">
 
-    <?php if ($nombre_regalado !== ""): ?>
-        <p class="nombre-amigo"><?php echo $nombre_regalado; ?></p>
-    <?php endif; ?>
+        <h2>Iniciar Sesión</h2>
 
-    <a href="login.html" class="btn btn-primary mt-4 w-100">Volver</a>
-</div>
+        <form method="POST">
+
+            <label>¿Quién eres?</label><br>
+            <select name="tipo" required>
+                <option value="participante">Participante</option>
+                <option value="admin">Administrador</option>
+            </select><br><br>
+
+            <!-- Campos para participantes -->
+            <div id="participante-fields">
+                <label>Email:</label>
+                <input type="email" name="email"><br><br>
+
+                <label>Contraseña:</label>
+                <input type="password" name="password_participante"><br><br>
+            </div>
+
+            <!-- Campo para administrador -->
+            <div id="admin-fields" style="display:none;">
+                <label>Contraseña Admin:</label>
+                <input type="password" name="password_admin"><br><br>
+            </div>
+
+            <button type="submit">Entrar</button>
+
+        </form>
+
+        <?php if ($mensaje) echo "<p style='color:red;'>$mensaje</p>"; ?>
+
+    </div>
+
+    <script>
+        // Cambiar campos según elección
+        document.querySelector("[name='tipo']").addEventListener("change", function() {
+            let tipo = this.value;
+
+            document.getElementById("participante-fields").style.display =
+                (tipo === "participante") ? "block" : "none";
+
+            document.getElementById("admin-fields").style.display =
+                (tipo === "admin") ? "block" : "none";
+        });
+    </script>
 
 </body>
+
 </html>
