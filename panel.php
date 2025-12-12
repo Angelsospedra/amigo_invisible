@@ -8,18 +8,20 @@ function obtenerSugerencias($hobbiesArray, $presupuesto, $apiKey) {
     // Convertir array a texto
     $textoHobbies = !empty($hobbiesArray) ? implode(", ", $hobbiesArray) : "gustos variados";
 
-    // Prompt estricto
-    $prompt = "Eres un experto en regalos para un amigo invisible. " .
-              "A la persona le gusta: " . $textoHobbies . ". " .
-              "El presupuesto maximo es de " . $presupuesto . " euros. " .
-              "Dame 3 sugerencias de regalos originales. " .
-              "Reglas estrictas: " .
-              "1. Responde UNICAMENTE con 3 elementos li de HTML. " .
-              "2. No uses emojis ni iconos visuales. " .
-              "3. No incluyas etiquetas ul ni markdown.";
+    // PROMPT ACTUALIZADO PARA ENLACES
+    $prompt = "Eres un experto en regalos. " .
+              "Persona: le gusta " . $textoHobbies . ". " .
+              "Presupuesto maximo: " . $presupuesto . " euros. " .
+              "Genera 3 ideas de regalos originales. " .
+              "REGLAS OBLIGATORIAS DE FORMATO: " .
+              "1. Responde UNICAMENTE con 3 elementos <li> de HTML. " .
+              "2. Dentro de cada <li>, pon el nombre del regalo en negrita (<b>). " .
+              "3. Despues del nombre, añade un enlace HTML <a>. " .
+              "4. El enlace debe tener target='_blank' y el href debe ser: https://www.amazon.es/s?k=NOMBRE_DEL_PRODUCTO_CODIFICADO " .
+              "5. El texto del enlace debe ser 'Ver precio'. " .
+              "6. No uses emojis ni markdown.";
 
-    // CAMBIO DEFINITIVO: Usamos el alias 'gemini-flash-latest' que salia en tu lista
-    // Este apunta siempre a la version estable mas rapida disponible para tu cuenta
+    // Usamos el modelo estable
     $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . $apiKey;
 
     $data = [
@@ -38,7 +40,7 @@ function obtenerSugerencias($hobbiesArray, $presupuesto, $apiKey) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
     
-    // Desactivar verificacion SSL (necesario en local)
+    // Desactivar verificacion SSL (local)
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
     
     $response = curl_exec($ch);
@@ -53,7 +55,6 @@ function obtenerSugerencias($hobbiesArray, $presupuesto, $apiKey) {
 
     $json = json_decode($response, true);
     
-    // Verificacion de errores devueltos por Google
     if (isset($json['error'])) {
         return "<li>Error API: " . $json['error']['message'] . "</li>";
     }
@@ -119,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['pedir_ayuda'])) {
         $presupuesto = floatval($_POST['presupuesto']);
         
         // ----------------------------------------------------
-        // PEGA AQUI TU API KEY (asegurate de no dejar espacios extra)
+        // PEGA AQUI TU API KEY
         $miApiKey = "AIzaSyDYPIG4NC-ZCTgAU3AaBIqbDH7bevjx5ZI"; 
         // ----------------------------------------------------
 
@@ -211,7 +212,7 @@ $conn->close();
             margin-bottom: 40px;
         }
 
-        a {
+        a.nav-link {
             display: inline-block;
             margin: 5px;
             padding: 10px 15px;
@@ -222,7 +223,7 @@ $conn->close();
             transition: background 0.3s;
         }
 
-        a:hover {
+        a.nav-link:hover {
             background-color: #0056b3;
         }
 
@@ -282,8 +283,23 @@ $conn->close();
         }
         
         .resultados-ia li {
-            margin-bottom: 5px;
-            font-size: 0.9em;
+            margin-bottom: 10px; /* Mas espacio entre regalos */
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        /* Estilo especifico para el enlace de Amazon generado por la IA */
+        .resultados-ia a {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 0.85em;
+            color: #d35400;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        
+        .resultados-ia a:hover {
+            color: #e67e22;
         }
     </style>
 </head>
@@ -355,8 +371,8 @@ $conn->close();
     <?php endif; ?>
 
     <div class="links">
-        <a href="editar_perfil.php">Editar Perfil</a>
-        <a href="logout_participante.php">Cerrar sesion</a>
+        <a href="editar_perfil.php" class="nav-link">Editar Perfil</a>
+        <a href="logout_participante.php" class="nav-link">Cerrar sesion</a>
     </div>
 
 </body>
