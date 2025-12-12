@@ -7,7 +7,6 @@ if (!isset($_SESSION['participante_id'])) {
 
 $id = $_SESSION['participante_id'];
 
-
 include('conexion.php');
 
 // Obtener datos actuales
@@ -22,7 +21,14 @@ if ($result->num_rows === 0) {
 
 $usuario = $result->fetch_assoc();
 
+// Decodificar hobbies si existen
+$hobbies = [];
+if (!empty($usuario['hobbies'])) {
+    $hobbies = json_decode($usuario['hobbies'], true);
+}
+
 $stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +50,7 @@ $stmt->close();
             width: 100%;
             padding: 8px;
             margin-bottom: 12px;
+            box-sizing: border-box;
         }
 
         .perfil-foto {
@@ -53,6 +60,69 @@ $stmt->close();
             object-fit: cover;
             display: block;
             margin: 0 auto 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .hobbies-container {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .hobby-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .hobby-input input {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .btn-remove {
+            background-color: #dc3545;
+            width: auto;
+            padding: 8px 15px;
+            margin-bottom: 0;
+        }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
+
+        .btn-add-hobby {
+            background-color: #28a745;
+            margin-top: 10px;
+        }
+
+        .btn-add-hobby:hover {
+            background-color: #218838;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 
@@ -84,20 +154,72 @@ $stmt->close();
 
             <label>Sexo:</label>
             <select name="gender" required>
-                <option value="masculino" <?php echo $usuario['gender'] == "masculino" ? "selected" : ""; ?>>Masculino</option>
-                <option value="femenino" <?php echo $usuario['gender'] == "femenino" ? "selected" : ""; ?>>Femenino</option>
+                <option value="masculino" <?php echo $usuario['gender'] == "masculino" ? "selected" : ""; ?>>Masculino
+                </option>
+                <option value="femenino" <?php echo $usuario['gender'] == "femenino" ? "selected" : ""; ?>>Femenino
+                </option>
             </select>
 
             <label>Cambiar foto (opcional):</label>
             <input type="file" name="foto" accept="image/*">
 
+            <!-- SECCIÓN DE HOBBIES -->
+            <div class="hobbies-container">
+                <label><strong>Tus Hobbies/Gustos (máximo 3):</strong></label>
+
+                <div id="hobbies-list">
+                    <?php foreach ($hobbies as $hobby): ?>
+                    <div class="hobby-input">
+                        <input type="text" name="hobby[]" value="<?php echo $hobby; ?>" placeholder="Ej: Videojuegos">
+                        <button type="button" class="btn-remove"
+                            onclick="this.parentElement.remove(); updateButtonState();">✕</button>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <button type="button" class="btn-add-hobby" id="btn-add-hobby">+ Añadir otro gusto</button>
+            </div>
+            <br>
+
             <button type="submit">Guardar Cambios</button>
 
         </form>
 
-        <br>
         <a href="panel.php">Volver al perfil</a>
 
     </div>
+
+    <script>
+        const MAX_HOBBIES = 3;
+
+        document.getElementById("btn-add-hobby").addEventListener("click", function () {
+            const hobbyList = document.getElementById("hobbies-list");
+            const currentHobbies = hobbyList.querySelectorAll(".hobby-input").length;
+
+            if (currentHobbies < MAX_HOBBIES) {
+                const newHobby = document.createElement("div");
+                newHobby.className = "hobby-input";
+                newHobby.innerHTML = `
+                    <input type="text" name="hobby[]" placeholder="Ej: Lectura">
+                    <button type="button" class="btn-remove" onclick="this.parentElement.remove(); updateButtonState();">✕</button>
+                `;
+                hobbyList.appendChild(newHobby);
+                updateButtonState();
+            }
+        });
+
+        function updateButtonState() {
+            const hobbyList = document.getElementById("hobbies-list");
+            const currentHobbies = hobbyList.querySelectorAll(".hobby-input").length;
+            const button = document.getElementById("btn-add-hobby");
+
+            button.disabled = currentHobbies >= MAX_HOBBIES;
+            button.style.opacity = currentHobbies >= MAX_HOBBIES ? "0.5" : "1";
+        }
+
+        updateButtonState();
+    </script>
+
 </body>
+
 </html>
