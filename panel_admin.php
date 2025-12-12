@@ -85,6 +85,10 @@ $hay_sorteo = $conn->query("SELECT COUNT(*) AS total FROM regalos")->fetch_assoc
             <p>Ya existe un sorteo generado.</p>
             <a href="ver_sorteo.php"><button>Ver resultados</button></a>
 
+            <form action="rehacer_sorteo.php" method="POST" style="display:inline-block; margin-left: 10px;">
+                <button type="submit" style="background:orange;color:white;">Rehacer Sorteo</button>
+            </form>
+
         <?php else: ?>
 
             <form action="sorteo.php" method="POST">
