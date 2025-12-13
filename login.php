@@ -68,107 +68,14 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Iniciar Sesión</title>
-    <style>
-        body {
-            font-family: Arial;
-            margin: 20px;
-            background-color: #f5f5f5;
-        }
-
-        .container {
-            width: 400px;
-            margin: 50px auto;
-            padding: 30px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
-
-        input,
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-        }
-
-        button {
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        #admin-fields {
-            display: none;
-        }
-
-        .mensaje {
-            color: #dc3545;
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border-radius: 4px;
-            border: 1px solid #f5c6cb;
-        }
-
-        .registro-link {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
-        }
-
-        .registro-link a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .registro-link a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
 
     <div class="container">
 
-        <h2>🎁 Amigo Invisible</h2>
+        <h2>Amigo Invisible</h2>
 
         <form method="POST">
 
@@ -197,7 +104,7 @@ $conn->close();
 
         </form>
 
-        <?php if ($mensaje) echo "<p class='mensaje'>$mensaje</p>"; ?>
+        <?php if ($mensaje) echo "<p class='mensaje error'>$mensaje</p>"; ?>
 
         <div class="registro-link">
             ¿No tienes cuenta? <a href="registro.php">Regístrate aquí</a>

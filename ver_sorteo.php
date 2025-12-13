@@ -20,20 +20,40 @@ $result = $conn->query("
 ");
 ?>
 
-<h2>Sorteo Actual</h2>
-<a href="panel_admin.php">Volver</a>
-<hr>
+<!DOCTYPE html>
+<html lang="es">
 
-<?php while ($row = $result->fetch_assoc()): ?>
+<head>
+    <meta charset="UTF-8">
+    <title>Ver Sorteo</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
 
-    <img src="fotos/<?php echo $row['dador_foto']; ?>" width="50">
-    <?php echo $row['dador_nombre'] . " " . $row['dador_apellido']; ?>
+<body>
 
-    →
+    <div class="container admin-panel">
+        <h2>Sorteo Actual</h2>
+        
+        <a href="panel_admin.php"><button>Volver al Panel</button></a>
+        
+        <hr>
 
-    <img src="fotos/<?php echo $row['rec_foto']; ?>" width="50">
-    <?php echo $row['rec_nombre'] . " " . $row['rec_apellido']; ?>
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <div class="sorteo-row">
+                <div class="sorteo-persona">
+                    <img src="fotos/<?php echo htmlspecialchars($row['dador_foto']); ?>">
+                    <span><?php echo htmlspecialchars($row['dador_nombre'] . " " . $row['dador_apellido']); ?></span>
+                </div>
 
-    <br><br>
+                <span class="sorteo-flecha">→</span>
 
-<?php endwhile; ?>
+                <div class="sorteo-persona">
+                    <img src="fotos/<?php echo htmlspecialchars($row['rec_foto']); ?>">
+                    <span><?php echo htmlspecialchars($row['rec_nombre'] . " " . $row['rec_apellido']); ?></span>
+                </div>
+            </div>
+        <?php endwhile; ?>
+    </div>
+
+</body>
+</html>

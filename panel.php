@@ -5,10 +5,8 @@ session_start();
 $sugerencias = ""; 
 
 function obtenerSugerencias($hobbiesArray, $presupuesto, $apiKey) {
-    // Convertir array a texto
     $textoHobbies = !empty($hobbiesArray) ? implode(", ", $hobbiesArray) : "gustos variados";
 
-    // PROMPT ACTUALIZADO PARA ENLACES
     $prompt = "Eres un experto en regalos. " .
               "Persona: le gusta " . $textoHobbies . ". " .
               "Presupuesto maximo: " . $presupuesto . " euros. " .
@@ -21,7 +19,6 @@ function obtenerSugerencias($hobbiesArray, $presupuesto, $apiKey) {
               "5. El texto del enlace debe ser 'Ver precio'. " .
               "6. No uses emojis ni markdown.";
 
-    // Usamos el modelo estable
     $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . $apiKey;
 
     $data = [
@@ -39,8 +36,6 @@ function obtenerSugerencias($hobbiesArray, $presupuesto, $apiKey) {
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-    
-    // Desactivar verificacion SSL (local)
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
     
     $response = curl_exec($ch);
@@ -76,7 +71,6 @@ include('conexion.php');
 
 $id = $_SESSION['participante_id'];
 
-// Obtener datos del usuario logueado
 $stmt = $conn->prepare("SELECT * FROM participantes WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -93,7 +87,6 @@ if (!empty($usuario['hobbies'])) {
     $hobbies = json_decode($usuario['hobbies'], true);
 }
 
-// Obtener a quien le toca regalar
 $stmt2 = $conn->prepare("
     SELECT p.id, p.nombre, p.apellido, p.foto, p.hobbies
     FROM regalos r
@@ -114,15 +107,10 @@ if ($result2->num_rows > 0) {
     }
 }
 
-// --- PROCESAR FORMULARIO ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['pedir_ayuda'])) {
     if ($asignado) {
         $presupuesto = floatval($_POST['presupuesto']);
-        
-        // ----------------------------------------------------
-        // PEGA AQUI TU API KEY
         $miApiKey = "AIzaSyDYPIG4NC-ZCTgAU3AaBIqbDH7bevjx5ZI"; 
-        // ----------------------------------------------------
 
         if ($presupuesto > 0 && !empty($miApiKey)) {
             $sugerencias = obtenerSugerencias($hobbies_asignado, $presupuesto, $miApiKey);
@@ -143,170 +131,12 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Mi Perfil</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 30px;
-            background-color: #f4f4f4;
-        }
-
-        .foto-perfil {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 15px;
-            border: 4px solid #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .contenedor {
-            width: 350px;
-            margin: auto;
-            text-align: left;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .sorteo-info {
-            margin-top: 30px;
-            padding: 20px;
-            background: #fff;
-            border-radius: 10px;
-            width: 350px;
-            margin-left: auto;
-            margin-right: auto;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .asignado-foto {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 10px auto;
-            display: block;
-        }
-
-        .hobbies-list {
-            list-style: none;
-            padding: 0;
-            margin: 10px 0;
-        }
-
-        .hobbies-list li {
-            background-color: #e7f3ff;
-            padding: 8px;
-            margin: 5px 0;
-            border-radius: 4px;
-            border-left: 4px solid #007bff;
-        }
-
-        .links {
-            margin-top: 20px;
-            margin-bottom: 40px;
-        }
-
-        a.nav-link {
-            display: inline-block;
-            margin: 5px;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background 0.3s;
-        }
-
-        a.nav-link:hover {
-            background-color: #0056b3;
-        }
-
-        /* Estilos seccion IA */
-        .ai-section {
-            margin-top: 20px;
-            border-top: 2px dashed #ccc;
-            padding-top: 15px;
-        }
-
-        .ai-form {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
-
-        .ai-form input {
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 70px;
-        }
-
-        .btn-ia {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .btn-ia:hover {
-            background-color: #218838;
-        }
-
-        .resultados-ia {
-            text-align: left;
-            background-color: #f9fff9;
-            border: 1px solid #c3e6cb;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .resultados-ia h4 {
-            margin-top: 0;
-            color: #155724;
-            font-size: 0.9em;
-        }
-
-        .resultados-ia ul {
-            padding-left: 20px;
-            margin-bottom: 0;
-        }
-        
-        .resultados-ia li {
-            margin-bottom: 10px; /* Mas espacio entre regalos */
-            font-size: 0.95em;
-            line-height: 1.5;
-        }
-
-        /* Estilo especifico para el enlace de Amazon generado por la IA */
-        .resultados-ia a {
-            display: inline-block;
-            margin-left: 8px;
-            font-size: 0.85em;
-            color: #d35400;
-            text-decoration: underline;
-            font-weight: bold;
-        }
-        
-        .resultados-ia a:hover {
-            color: #e67e22;
-        }
-    </style>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
 
-    <h2>Bienvenido/a, <?php echo htmlspecialchars($usuario['nombre']); ?>!</h2>
+    <h2>Bienvenido/a, <?php echo htmlspecialchars($usuario['nombre']); ?></h2>
 
     <img src="fotos/<?php echo htmlspecialchars($usuario['foto']); ?>" class="foto-perfil">
 
@@ -341,10 +171,10 @@ $conn->close();
                 </ul>
 
                 <div class="ai-section">
-                    <p style="font-weight: bold; margin-bottom: 5px;">No sabes que regalar?</p>
+                    <p style="font-weight: bold; margin-bottom: 5px; color: #DAA520;">¿No sabes que regalar?</p>
                     
                     <form method="POST" class="ai-form">
-                        <label for="presupuesto">Max eur:</label>
+                        <label for="presupuesto">Max euros:</label>
                         <input type="number" name="presupuesto" id="presupuesto" value="20" min="1" step="1">
                         <button type="submit" name="pedir_ayuda" class="btn-ia">
                             Pedir ideas
@@ -360,7 +190,7 @@ $conn->close();
                         </div>
                     <?php endif; ?>
                 </div>
-                <?php else: ?>
+            <?php else: ?>
                 <p><em>Este usuario no ha indicado hobbies, sera mas dificil elegir regalo...</em></p>
             <?php endif; ?>
         </div>

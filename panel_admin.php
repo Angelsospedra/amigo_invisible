@@ -22,36 +22,12 @@ $hay_sorteo = $conn->query("SELECT COUNT(*) AS total FROM regalos")->fetch_assoc
 <head>
     <meta charset="UTF-8">
     <title>Panel Administrador</title>
-    <style>
-        .container {
-            width: 800px;
-            margin: 20px auto;
-            font-family: Arial;
-        }
-
-        .participante {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .participante img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin-right: 15px;
-            object-fit: cover;
-        }
-
-        button {
-            padding: 8px 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="container admin-panel">
 
         <h2>Panel del Administrador</h2>
 
@@ -70,7 +46,7 @@ $hay_sorteo = $conn->query("SELECT COUNT(*) AS total FROM regalos")->fetch_assoc
                 &nbsp;&nbsp;
 
                 <a href="borrar_participante.php?id=<?php echo $p['id']; ?>">
-                    <button style="background:red;color:white;">Borrar</button>
+                    <button>Borrar</button>
                 </a>
 
             </div>
@@ -85,14 +61,14 @@ $hay_sorteo = $conn->query("SELECT COUNT(*) AS total FROM regalos")->fetch_assoc
             <p>Ya existe un sorteo generado.</p>
             <a href="ver_sorteo.php"><button>Ver resultados</button></a>
 
-            <form action="rehacer_sorteo.php" method="POST" style="display:inline-block; margin-left: 10px;">
-                <button type="submit" style="background:orange;color:white;">Rehacer Sorteo</button>
+            <form action="rehacer_sorteo.php" method="POST">
+                <button type="submit">Rehacer Sorteo</button>
             </form>
 
         <?php else: ?>
 
             <form action="sorteo.php" method="POST">
-                <button type="submit" style="background:green;color:white;">Generar Sorteo</button>
+                <button type="submit">Generar Sorteo</button>
             </form>
 
         <?php endif; ?>
