@@ -4,77 +4,88 @@
    ============================================ */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0f3d3e 0%, #1a5f5f 50%, #0d2f2f 100%);
-    min-height: 100vh;
-    color: #f5f5f5;
-    position: relative;
-    overflow-x: hidden;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f3d3e 0%, #1a5f5f 50%, #0d2f2f 100%);
+  min-height: 100vh;
+  color: #f5f5f5;
+  position: relative;
+  overflow-x: hidden;
 }
 
 /* Efecto de nieve sutil */
 body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(2px 2px at 20% 30%, white, transparent),
-        radial-gradient(2px 2px at 60% 70%, white, transparent),
-        radial-gradient(1px 1px at 50% 50%, white, transparent);
-    background-size: 200px 200px, 300px 300px, 250px 250px;
-    background-position: 0 0, 40px 60px, 130px 270px;
-    opacity: 0.4;
-    pointer-events: none;
-    animation: snow 20s linear infinite;
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 60% 70%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent);
+  background-size: 200px 200px, 300px 300px, 250px 250px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+  opacity: 0.4;
+  pointer-events: none;
+  animation: snow 20s linear infinite;
 }
 
 @keyframes snow {
-    0% { background-position: 0 0, 40px 60px, 130px 270px; }
-    100% { background-position: 200px 200px, 240px 260px, 330px 470px; }
+  0% {
+    background-position: 0 0, 40px 60px, 130px 270px;
+  }
+  100% {
+    background-position: 200px 200px, 240px 260px, 330px 470px;
+  }
 }
 
 /* ============================================
    CONTENEDOR PRINCIPAL
    ============================================ */
 
-.container, .form-container, .contenedor {
-    width: 90%;
-    max-width: 450px;
-    margin: 50px auto;
-    padding: 40px;
-    background: linear-gradient(145deg, rgba(139, 0, 0, 0.9), rgba(178, 34, 34, 0.85));
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 2px solid rgba(218, 165, 32, 0.4);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    position: relative;
+.container,
+.form-container,
+.contenedor {
+  width: 90%;
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 40px;
+  background: linear-gradient(
+    145deg,
+    rgba(139, 0, 0, 0.9),
+    rgba(178, 34, 34, 0.85)
+  );
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 2px solid rgba(218, 165, 32, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
 }
 
 /* Contenedor más ancho para panel admin */
 .container.admin-panel {
-    max-width: 900px;
+  max-width: 900px;
 }
 
 /* Decoración esquina superior */
-.container::after, .form-container::after, .contenedor::after {
-    content: '★';
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 28px;
-    color: #DAA520;
-    opacity: 0.6;
-    text-shadow: 0 0 10px rgba(218, 165, 32, 0.8);
+.container::after,
+.form-container::after,
+.contenedor::after {
+  content: "★";
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  color: #daa520;
+  opacity: 0.6;
+  text-shadow: 0 0 10px rgba(218, 165, 32, 0.8);
 }
 
 /* ============================================
@@ -82,20 +93,20 @@ body::before {
    ============================================ */
 
 h2 {
-    text-align: center;
-    color: #DAA520;
-    font-size: 28px;
-    margin-bottom: 25px;
-    text-shadow: 0 2px 10px rgba(218, 165, 32, 0.5);
-    letter-spacing: 0.5px;
+  text-align: center;
+  color: #daa520;
+  font-size: 28px;
+  margin-bottom: 25px;
+  text-shadow: 0 2px 10px rgba(218, 165, 32, 0.5);
+  letter-spacing: 0.5px;
 }
 
 h3 {
-    color: #DAA520;
-    font-size: 20px;
-    margin: 20px 0 15px;
-    border-bottom: 2px solid rgba(218, 165, 32, 0.4);
-    padding-bottom: 8px;
+  color: #daa520;
+  font-size: 20px;
+  margin: 20px 0 15px;
+  border-bottom: 2px solid rgba(218, 165, 32, 0.4);
+  padding-bottom: 8px;
 }
 
 /* ============================================
@@ -103,27 +114,27 @@ h3 {
    ============================================ */
 
 fieldset {
-    border: 2px solid rgba(218, 165, 32, 0.3);
-    border-radius: 15px;
-    padding: 30px;
-    margin: 20px 0;
-    background: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(218, 165, 32, 0.3);
+  border-radius: 15px;
+  padding: 30px;
+  margin: 20px 0;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 legend {
-    color: #DAA520;
-    font-size: 22px;
-    font-weight: bold;
-    padding: 0 15px;
+  color: #daa520;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 0 15px;
 }
 
 label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #f0e6d2;
-    font-size: 14px;
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #f0e6d2;
+  font-size: 14px;
 }
 
 input[type="text"],
@@ -133,15 +144,15 @@ input[type="number"],
 input[type="file"],
 select,
 textarea {
-    width: 100%;
-    padding: 12px 15px;
-    margin-bottom: 15px;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(218, 165, 32, 0.3);
-    border-radius: 10px;
-    color: #f5f5f5;
-    font-size: 14px;
-    transition: all 0.3s ease;
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(218, 165, 32, 0.3);
+  border-radius: 10px;
+  color: #f5f5f5;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
 input[type="text"]:focus,
@@ -150,60 +161,60 @@ input[type="password"]:focus,
 input[type="number"]:focus,
 select:focus,
 textarea:focus {
-    outline: none;
-    border-color: #DAA520;
-    box-shadow: 0 0 15px rgba(218, 165, 32, 0.4);
-    background: rgba(0, 0, 0, 0.6);
+  outline: none;
+  border-color: #daa520;
+  box-shadow: 0 0 15px rgba(218, 165, 32, 0.4);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 /* Estilo mejorado para input file */
 input[type="file"] {
-    padding: 12px;
-    cursor: pointer;
-    background: rgba(27, 83, 44, 0.3);
-    border: 2px dashed rgba(218, 165, 32, 0.4);
-    color: #f0e6d2;
-    font-size: 14px;
-    position: relative;
+  padding: 12px;
+  cursor: pointer;
+  background: rgba(27, 83, 44, 0.3);
+  border: 2px dashed rgba(218, 165, 32, 0.4);
+  color: #f0e6d2;
+  font-size: 14px;
+  position: relative;
 }
 
 input[type="file"]:hover {
-    border-color: #DAA520;
-    background: rgba(27, 83, 44, 0.4);
+  border-color: #daa520;
+  background: rgba(27, 83, 44, 0.4);
 }
 
 /* Estilo del botón "Seleccionar archivo" */
 input[type="file"]::file-selector-button {
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #1B532C 0%, #2D673E 100%);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 14px;
-    margin-right: 15px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(27, 83, 44, 0.3);
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #1b532c 0%, #2d673e 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(27, 83, 44, 0.3);
 }
 
 input[type="file"]::file-selector-button:hover {
-    background: linear-gradient(135deg, #2D673E 0%, #3D7F50 100%);
-    transform: scale(1.02);
-    box-shadow: 0 3px 12px rgba(27, 83, 44, 0.5);
+  background: linear-gradient(135deg, #2d673e 0%, #3d7f50 100%);
+  transform: scale(1.02);
+  box-shadow: 0 3px 12px rgba(27, 83, 44, 0.5);
 }
 
 /* Radio buttons personalizados */
 input[type="radio"] {
-    margin-right: 8px;
-    margin-left: 15px;
-    accent-color: #DAA520;
-    cursor: pointer;
+  margin-right: 8px;
+  margin-left: 15px;
+  accent-color: #daa520;
+  cursor: pointer;
 }
 
 /* Placeholder styling */
 ::placeholder {
-    color: rgba(240, 230, 210, 0.5);
+  color: rgba(240, 230, 210, 0.5);
 }
 
 /* ============================================
@@ -212,68 +223,68 @@ input[type="radio"] {
 
 button,
 input[type="submit"] {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, #1B532C 0%, #2D673E 100%);
-    color: white;
-    border: 2px solid rgba(218, 165, 32, 0.3);
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    margin-top: 15px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(27, 83, 44, 0.4);
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #1b532c 0%, #2d673e 100%);
+  color: white;
+  border: 2px solid rgba(218, 165, 32, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(27, 83, 44, 0.4);
 }
 
 button:hover,
 input[type="submit"]:hover {
-    background: linear-gradient(135deg, #2D673E 0%, #3D7F50 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(45, 103, 62, 0.6);
-    border-color: #DAA520;
+  background: linear-gradient(135deg, #2d673e 0%, #3d7f50 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 103, 62, 0.6);
+  border-color: #daa520;
 }
 
 button:active,
 input[type="submit"]:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 /* Botones secundarios */
 .btn-secondary,
 button[type="button"] {
-    background: linear-gradient(135deg, #1B532C 0%, #2D673E 100%);
-    border-color: rgba(218, 165, 32, 0.2);
+  background: linear-gradient(135deg, #1b532c 0%, #2d673e 100%);
+  border-color: rgba(218, 165, 32, 0.2);
 }
 
 .btn-secondary:hover,
 button[type="button"]:hover {
-    background: linear-gradient(135deg, #2D673E 0%, #3D7F50 100%);
+  background: linear-gradient(135deg, #2d673e 0%, #3d7f50 100%);
 }
 
 /* Botones de peligro */
 .btn-remove,
 .btn-danger {
-    background: linear-gradient(135deg, #8B0000 0%, #B22222 100%);
-    width: auto;
-    padding: 8px 15px;
-    margin: 0;
+  background: linear-gradient(135deg, #8b0000 0%, #b22222 100%);
+  width: auto;
+  padding: 8px 15px;
+  margin: 0;
 }
 
 .btn-remove:hover,
 .btn-danger:hover {
-    background: linear-gradient(135deg, #B22222 0%, #DC143C 100%);
+  background: linear-gradient(135deg, #b22222 0%, #dc143c 100%);
 }
 
 /* Botón de éxito */
 .btn-add-hobby,
 .btn-ia {
-    background: linear-gradient(135deg, #1B532C 0%, #2D673E 100%);
+  background: linear-gradient(135deg, #1b532c 0%, #2d673e 100%);
 }
 
 .btn-add-hobby:hover,
 .btn-ia:hover {
-    background: linear-gradient(135deg, #2D673E 0%, #3D7F50 100%);
+  background: linear-gradient(135deg, #2d673e 0%, #3d7f50 100%);
 }
 
 /* ============================================
@@ -282,36 +293,36 @@ button[type="button"]:hover {
 
 button[style*="background:red"],
 button[style*="background: red"] {
-    background: linear-gradient(135deg, #8B0000 0%, #B22222 100%) !important;
-    box-shadow: 0 2px 10px rgba(178, 34, 34, 0.4);
+  background: linear-gradient(135deg, #8b0000 0%, #b22222 100%) !important;
+  box-shadow: 0 2px 10px rgba(178, 34, 34, 0.4);
 }
 
 button[style*="background:red"]:hover,
 button[style*="background: red"]:hover {
-    background: linear-gradient(135deg, #B22222 0%, #DC143C 100%) !important;
+  background: linear-gradient(135deg, #b22222 0%, #dc143c 100%) !important;
 }
 
 button[style*="background:green"],
 button[style*="background: green"] {
-    background: linear-gradient(135deg, #1B532C 0%, #2D673E 100%) !important;
-    box-shadow: 0 2px 10px rgba(27, 83, 44, 0.4);
+  background: linear-gradient(135deg, #1b532c 0%, #2d673e 100%) !important;
+  box-shadow: 0 2px 10px rgba(27, 83, 44, 0.4);
 }
 
 button[style*="background:green"]:hover,
 button[style*="background: green"]:hover {
-    background: linear-gradient(135deg, #2D673E 0%, #3D7F50 100%) !important;
+  background: linear-gradient(135deg, #2d673e 0%, #3d7f50 100%) !important;
 }
 
 button[style*="background:orange"],
 button[style*="background: orange"] {
-    background: linear-gradient(135deg, #DAA520 0%, #FFD700 100%) !important;
-    box-shadow: 0 2px 10px rgba(218, 165, 32, 0.4);
-    color: #000;
+  background: linear-gradient(135deg, #daa520 0%, #ffd700 100%) !important;
+  box-shadow: 0 2px 10px rgba(218, 165, 32, 0.4);
+  color: #000;
 }
 
 button[style*="background:orange"]:hover,
 button[style*="background: orange"]:hover {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
+  background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%) !important;
 }
 
 /* ============================================
@@ -319,34 +330,34 @@ button[style*="background: orange"]:hover {
    ============================================ */
 
 .mensaje {
-    padding: 12px 15px;
-    margin: 15px 0;
-    border-radius: 10px;
-    font-size: 14px;
-    animation: slideIn 0.3s ease;
+  padding: 12px 15px;
+  margin: 15px 0;
+  border-radius: 10px;
+  font-size: 14px;
+  animation: slideIn 0.3s ease;
 }
 
 .mensaje.error {
-    background: rgba(139, 0, 0, 0.3);
-    border: 1px solid rgba(178, 34, 34, 0.6);
-    color: #ffb3b3;
+  background: rgba(139, 0, 0, 0.3);
+  border: 1px solid rgba(178, 34, 34, 0.6);
+  color: #ffb3b3;
 }
 
 .mensaje.success {
-    background: rgba(27, 83, 44, 0.3);
-    border: 1px solid rgba(45, 103, 62, 0.6);
-    color: #90EE90;
+  background: rgba(27, 83, 44, 0.3);
+  border: 1px solid rgba(45, 103, 62, 0.6);
+  color: #90ee90;
 }
 
 @keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ============================================
@@ -354,46 +365,46 @@ button[style*="background: orange"]:hover {
    ============================================ */
 
 a {
-    color: #DAA520;
-    text-decoration: none;
-    transition: all 0.3s ease;
+  color: #daa520;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 a:hover {
-    color: #FFD700;
-    text-decoration: underline;
+  color: #ffd700;
+  text-decoration: underline;
 }
 
 .registro-link,
 .login-link {
-    text-align: center;
-    margin-top: 25px;
-    color: #cbd5e1;
-    font-size: 14px;
+  text-align: center;
+  margin-top: 25px;
+  color: #cbd5e1;
+  font-size: 14px;
 }
 
 .registro-link a,
 .login-link a {
-    color: #DAA520;
-    font-weight: 600;
+  color: #daa520;
+  font-weight: 600;
 }
 
 a.nav-link {
-    display: inline-block;
-    margin: 5px;
-    padding: 10px 15px;
-    background: linear-gradient(135deg, #1B532C 0%, #2D673E 100%);
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    border: 1px solid rgba(218, 165, 32, 0.3);
-    transition: all 0.3s ease;
+  display: inline-block;
+  margin: 5px;
+  padding: 10px 15px;
+  background: linear-gradient(135deg, #1b532c 0%, #2d673e 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid rgba(218, 165, 32, 0.3);
+  transition: all 0.3s ease;
 }
 
 a.nav-link:hover {
-    background: linear-gradient(135deg, #2D673E 0%, #3D7F50 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(27, 83, 44, 0.5);
+  background: linear-gradient(135deg, #2d673e 0%, #3d7f50 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(27, 83, 44, 0.5);
 }
 
 /* ============================================
@@ -402,25 +413,25 @@ a.nav-link:hover {
 
 .perfil-foto,
 .foto-perfil {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto 20px;
-    border: 4px solid #DAA520;
-    box-shadow: 0 4px 15px rgba(218, 165, 32, 0.5);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 20px;
+  border: 4px solid #daa520;
+  box-shadow: 0 4px 15px rgba(218, 165, 32, 0.5);
 }
 
 .asignado-foto {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 10px auto;
-    display: block;
-    border: 3px solid #DAA520;
-    box-shadow: 0 4px 12px rgba(218, 165, 32, 0.4);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 10px auto;
+  display: block;
+  border: 3px solid #daa520;
+  box-shadow: 0 4px 12px rgba(218, 165, 32, 0.4);
 }
 
 /* ============================================
@@ -429,31 +440,35 @@ a.nav-link:hover {
 
 .perfil-card,
 .sorteo-info {
-    background: linear-gradient(145deg, rgba(27, 83, 44, 0.3), rgba(45, 103, 62, 0.2));
-    border-radius: 15px;
-    padding: 25px;
-    margin: 20px auto;
-    border: 2px solid rgba(218, 165, 32, 0.3);
-    max-width: 450px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(
+    145deg,
+    rgba(27, 83, 44, 0.3),
+    rgba(45, 103, 62, 0.2)
+  );
+  border-radius: 15px;
+  padding: 25px;
+  margin: 20px auto;
+  border: 2px solid rgba(218, 165, 32, 0.3);
+  max-width: 450px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .perfil-info {
-    display: grid;
-    gap: 12px;
+  display: grid;
+  gap: 12px;
 }
 
 .perfil-info p {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
-    border-left: 3px solid #DAA520;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border-left: 3px solid #daa520;
 }
 
 .perfil-info strong {
-    color: #DAA520;
+  color: #daa520;
 }
 
 /* ============================================
@@ -461,48 +476,52 @@ a.nav-link:hover {
    ============================================ */
 
 .hobbies-container {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
-    padding: 20px;
-    margin: 20px 0;
-    border: 1px solid rgba(218, 165, 32, 0.2);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid rgba(218, 165, 32, 0.2);
 }
 
 .hobby-input {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 12px;
-    align-items: center;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  align-items: center;
 }
 
 .hobby-input input {
-    flex: 1;
-    margin-bottom: 0;
+  flex: 1;
+  margin-bottom: 0;
 }
 
 .hobbies-list {
-    list-style: none;
-    padding: 0;
-    margin: 10px 0;
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
 }
 
 .hobbies-list li {
-    background: linear-gradient(135deg, rgba(27, 83, 44, 0.4), rgba(45, 103, 62, 0.3));
-    padding: 10px 15px;
-    margin: 8px 0;
-    border-radius: 8px;
-    border-left: 4px solid #DAA520;
-    color: #f5f5f5;
+  background: linear-gradient(
+    135deg,
+    rgba(27, 83, 44, 0.4),
+    rgba(45, 103, 62, 0.3)
+  );
+  padding: 10px 15px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border-left: 4px solid #daa520;
+  color: #f5f5f5;
 }
 
 .hobby-tag {
-    background: linear-gradient(135deg, #1B532C 0%, #2D673E 100%);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    display: inline-block;
-    border: 1px solid rgba(218, 165, 32, 0.3);
+  background: linear-gradient(135deg, #1b532c 0%, #2d673e 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  display: inline-block;
+  border: 1px solid rgba(218, 165, 32, 0.3);
 }
 
 /* ============================================
@@ -510,70 +529,70 @@ a.nav-link:hover {
    ============================================ */
 
 .ai-section {
-    margin-top: 20px;
-    border-top: 2px dashed rgba(218, 165, 32, 0.4);
-    padding-top: 15px;
+  margin-top: 20px;
+  border-top: 2px dashed rgba(218, 165, 32, 0.4);
+  padding-top: 15px;
 }
 
 .ai-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
 }
 
 .ai-form input {
-    padding: 8px 12px;
-    border: 1px solid rgba(218, 165, 32, 0.4);
-    border-radius: 6px;
-    width: 80px;
-    text-align: center;
+  padding: 8px 12px;
+  border: 1px solid rgba(218, 165, 32, 0.4);
+  border-radius: 6px;
+  width: 80px;
+  text-align: center;
 }
 
 .ai-form label {
-    margin: 0;
-    color: #DAA520;
+  margin: 0;
+  color: #daa520;
 }
 
 .resultados-ia {
-    text-align: left;
-    background: rgba(27, 83, 44, 0.2);
-    border: 2px solid rgba(45, 103, 62, 0.5);
-    padding: 15px;
-    border-radius: 10px;
+  text-align: left;
+  background: rgba(27, 83, 44, 0.2);
+  border: 2px solid rgba(45, 103, 62, 0.5);
+  padding: 15px;
+  border-radius: 10px;
 }
 
 .resultados-ia h4 {
-    margin-top: 0;
-    color: #DAA520;
-    font-size: 1em;
+  margin-top: 0;
+  color: #daa520;
+  font-size: 1em;
 }
 
 .resultados-ia ul {
-    padding-left: 20px;
-    margin-bottom: 0;
+  padding-left: 20px;
+  margin-bottom: 0;
 }
 
 .resultados-ia li {
-    margin-bottom: 12px;
-    font-size: 0.95em;
-    line-height: 1.6;
-    color: #f0e6d2;
+  margin-bottom: 12px;
+  font-size: 0.95em;
+  line-height: 1.6;
+  color: #f0e6d2;
 }
 
 .resultados-ia a {
-    display: inline-block;
-    margin-left: 8px;
-    font-size: 0.85em;
-    color: #FFD700;
-    text-decoration: underline;
-    font-weight: bold;
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.85em;
+  color: #ffd700;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 .resultados-ia a:hover {
-    color: #FFA500;
+  color: #ffa500;
 }
 
 /* ============================================
@@ -581,37 +600,45 @@ a.nav-link:hover {
    ============================================ */
 
 .participante {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    margin-bottom: 15px;
-    background: linear-gradient(135deg, rgba(27, 83, 44, 0.3), rgba(45, 103, 62, 0.2));
-    border-radius: 12px;
-    border: 1px solid rgba(218, 165, 32, 0.3);
-    transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: linear-gradient(
+    135deg,
+    rgba(27, 83, 44, 0.3),
+    rgba(45, 103, 62, 0.2)
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(218, 165, 32, 0.3);
+  transition: all 0.3s ease;
 }
 
 .participante:hover {
-    background: linear-gradient(135deg, rgba(27, 83, 44, 0.4), rgba(45, 103, 62, 0.3));
-    transform: translateX(5px);
-    border-color: #DAA520;
+  background: linear-gradient(
+    135deg,
+    rgba(27, 83, 44, 0.4),
+    rgba(45, 103, 62, 0.3)
+  );
+  transform: translateX(5px);
+  border-color: #daa520;
 }
 
 .participante img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: 15px;
-    object-fit: cover;
-    border: 3px solid #DAA520;
-    box-shadow: 0 2px 10px rgba(218, 165, 32, 0.3);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+  object-fit: cover;
+  border: 3px solid #daa520;
+  box-shadow: 0 2px 10px rgba(218, 165, 32, 0.3);
 }
 
 .participante button {
-    width: auto;
-    padding: 8px 15px;
-    margin-left: 10px;
-    font-size: 14px;
+  width: auto;
+  padding: 8px 15px;
+  margin-left: 10px;
+  font-size: 14px;
 }
 
 /* ============================================
@@ -619,41 +646,45 @@ a.nav-link:hover {
    ============================================ */
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
-    overflow: hidden;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 thead {
-    background: linear-gradient(135deg, rgba(139, 0, 0, 0.6), rgba(178, 34, 34, 0.5));
+  background: linear-gradient(
+    135deg,
+    rgba(139, 0, 0, 0.6),
+    rgba(178, 34, 34, 0.5)
+  );
 }
 
 th {
-    padding: 15px;
-    text-align: left;
-    color: #DAA520;
-    font-weight: 600;
-    border-bottom: 2px solid rgba(218, 165, 32, 0.4);
+  padding: 15px;
+  text-align: left;
+  color: #daa520;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(218, 165, 32, 0.4);
 }
 
 td {
-    padding: 12px 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 tr:hover {
-    background: rgba(0, 100, 0, 0.2);
+  background: rgba(0, 100, 0, 0.2);
 }
 
 td img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #DAA520;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #daa520;
 }
 
 /* ============================================
@@ -661,11 +692,11 @@ td img {
    ============================================ */
 
 .btn-small {
-    padding: 6px 12px;
-    font-size: 12px;
-    width: auto;
-    display: inline-block;
-    margin: 2px;
+  padding: 6px 12px;
+  font-size: 12px;
+  width: auto;
+  display: inline-block;
+  margin: 2px;
 }
 
 /* ============================================
@@ -674,7 +705,7 @@ td img {
 
 #admin-fields,
 #participante-fields {
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 /* ============================================
@@ -682,16 +713,16 @@ td img {
    ============================================ */
 
 hr {
-    border: none;
-    height: 2px;
-    background: linear-gradient(
-        to right,
-        transparent,
-        rgba(218, 165, 32, 0.6),
-        transparent
-    );
-    margin: 30px 0;
-    box-shadow: 0 1px 3px rgba(218, 165, 32, 0.3);
+  border: none;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(218, 165, 32, 0.6),
+    transparent
+  );
+  margin: 30px 0;
+  box-shadow: 0 1px 3px rgba(218, 165, 32, 0.3);
 }
 
 /* ============================================
@@ -699,33 +730,37 @@ hr {
    ============================================ */
 
 .sorteo-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
-    padding: 15px;
-    background: linear-gradient(135deg, rgba(27, 83, 44, 0.3), rgba(45, 103, 62, 0.2));
-    border-radius: 12px;
-    border: 1px solid rgba(218, 165, 32, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 15px;
+  background: linear-gradient(
+    135deg,
+    rgba(27, 83, 44, 0.3),
+    rgba(45, 103, 62, 0.2)
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(218, 165, 32, 0.3);
 }
 
 .sorteo-persona {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .sorteo-persona img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid #DAA520;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #daa520;
 }
 
 .sorteo-flecha {
-    margin: 0 20px;
-    font-size: 24px;
-    color: #DAA520;
+  margin: 0 20px;
+  font-size: 24px;
+  color: #daa520;
 }
 
 /* ============================================
@@ -733,9 +768,9 @@ hr {
    ============================================ */
 
 .links {
-    margin-top: 30px;
-    margin-bottom: 20px;
-    text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 /* ============================================
@@ -743,38 +778,43 @@ hr {
    ============================================ */
 
 @media (max-width: 768px) {
-    .container, .form-container, .contenedor, .sorteo-info {
-        width: 95%;
-        padding: 25px;
-        margin: 20px auto;
-    }
+  .container,
+  .form-container,
+  .contenedor,
+  .sorteo-info {
+    width: 95%;
+    padding: 25px;
+    margin: 20px auto;
+  }
 
-    h2 {
-        font-size: 24px;
-    }
+  h2 {
+    font-size: 24px;
+  }
 
-    table {
-        font-size: 12px;
-    }
+  table {
+    font-size: 12px;
+  }
 
-    th, td {
-        padding: 8px;
-    }
+  th,
+  td {
+    padding: 8px;
+  }
 
-    .perfil-foto, .foto-perfil {
-        width: 100px;
-        height: 100px;
-    }
+  .perfil-foto,
+  .foto-perfil {
+    width: 100px;
+    height: 100px;
+  }
 
-    .sorteo-row {
-        flex-direction: column;
-        gap: 15px;
-    }
+  .sorteo-row {
+    flex-direction: column;
+    gap: 15px;
+  }
 
-    .sorteo-flecha {
-        transform: rotate(90deg);
-        margin: 10px 0;
-    }
+  .sorteo-flecha {
+    transform: rotate(90deg);
+    margin: 10px 0;
+  }
 }
 
 /* ============================================
@@ -782,18 +822,20 @@ hr {
    ============================================ */
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-.container, .form-container, .contenedor {
-    animation: fadeIn 0.5s ease;
+.container,
+.form-container,
+.contenedor {
+  animation: fadeIn 0.5s ease;
 }
 
 /* ============================================
@@ -801,27 +843,212 @@ hr {
    ============================================ */
 
 .text-center {
-    text-align: center;
+  text-align: center;
 }
 
 .mt-20 {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .mb-20 {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Centrado general del body */
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 0;
+}
+
+/* Historial */
+.filter-section {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.filter-section select {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #d32f2f;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.filter-section select:hover {
+  background-color: #b71c1c;
+}
+
+.filter-section select option {
+  background-color: white;
+  color: black;
+}
+
+.historial-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.historial-table thead {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.historial-table th,
+.historial-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.historial-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.no-data {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+.btn-back {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #d32f2f;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.btn-back:hover {
+  background-color: #b71c1c;
+}
+.arrow {
+  text-align: center;
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+.historial-table td:nth-child(1),
+.historial-table td:nth-child(3) {
+  font-weight: 500;
+}
+.filter-section {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter-section form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter-section label {
+  font-weight: bold;
+  color: #333;
+}
+
+.filter-section select {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #d32f2f;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-filter {
+  padding: 8px 16px;
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-filter:hover {
+  background-color: #b71c1c;
+}
+
+.historial-section {
+  margin-top: 30px;
+}
+
+.historial-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.historial-table thead {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.historial-table th,
+.historial-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.historial-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.arrow {
+  text-align: center;
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+.no-data {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+.btn-back {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #d32f2f;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.btn-back:hover {
+  background-color: #b71c1c;
 }

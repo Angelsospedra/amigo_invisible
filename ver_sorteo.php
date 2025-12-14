@@ -33,9 +33,10 @@ $result = $conn->query("
 
     <div class="container admin-panel">
         <h2>Sorteo Actual</h2>
-        
+
         <a href="panel_admin.php"><button>Volver al Panel</button></a>
-        
+        <a href="historial.php"><button>Ver años anteriores</button></a>
+
         <hr>
 
         <?php while ($row = $result->fetch_assoc()): ?>
@@ -56,4 +57,5 @@ $result = $conn->query("
     </div>
 
 </body>
+
 </html>

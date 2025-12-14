@@ -32,6 +32,7 @@ $hay_sorteo = $conn->query("SELECT COUNT(*) AS total FROM regalos")->fetch_assoc
         <h2>Panel del Administrador</h2>
 
         <a href="logout.php"><button>Cerrar sesión</button></a>
+        <a href="historial.php"><button>Ver años anteriores</button></a>
         <hr>
 
         <h3>Participantes</h3>
@@ -75,4 +76,5 @@ $hay_sorteo = $conn->query("SELECT COUNT(*) AS total FROM regalos")->fetch_assoc
 
     </div>
 </body>
+
 </html>
