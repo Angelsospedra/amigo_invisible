@@ -4,6 +4,10 @@ include('conexion.php');
 
 $mensaje = "";
 
+// 1. OBTENER GRUPOS PARA EL DESPLEGABLE
+$sql_grupos = "SELECT * FROM grupos";
+$result_grupos = $conn->query($sql_grupos);
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $nombre = $_POST['nombre'] ?? "";
@@ -11,11 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'] ?? "";
     $password = $_POST['password'] ?? "";
     $gender = $_POST['gender'] ?? "";
+    $grupo_id = $_POST['grupo_id'] ?? ""; 
     $hobbies = $_POST['hobby'] ?? [];
 
-    // Validaciones básicas
-    if (empty($nombre) || empty($apellido) || empty($email) || empty($password) || empty($gender)) {
-        $mensaje = "Por favor completa todos los campos requeridos.";
+    // Validamos datos
+    if (empty($nombre) || empty($apellido) || empty($email) || empty($password) || empty($gender) || empty($grupo_id)) {
+        $mensaje = "Por favor completa todos los campos requeridos, incluyendo el grupo.";
     } else {
 
         // Verificar si el email ya existe
@@ -49,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Hash de contraseña
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-            // Insertar participante
+            // 2. INSERTAR PARTICIPANTE
             $stmt2 = $conn->prepare("
                 INSERT INTO participantes (nombre, apellido, email, password, gender, foto, hobbies)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -57,8 +62,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt2->bind_param("sssssss", $nombre, $apellido, $email, $password_hash, $gender, $foto_nombre, $hobbies_json);
 
             if ($stmt2->execute()) {
-                $mensaje = "¡Registro exitoso! Redirigiendo al login...";
-                header("Refresh: 2; url=login.php");
+                
+                // 3. RECUPERAR EL ID DEL USUARIO RECIÉN CREADO
+                // Esta función devuelve el ID autoincremental de la última consulta INSERT
+                $nuevo_participante_id = $conn->insert_id;
+
+                // 4. INSERTAR EN LA TABLA INTERMEDIA (participante_grupo)
+                // Asumo que tu tabla tiene columnas: participante_id y grupo_id
+                $stmt_grupo = $conn->prepare("INSERT INTO participante_grupo (participante_id, grupo_id) VALUES (?, ?)");
+                $stmt_grupo->bind_param("ii", $nuevo_participante_id, $grupo_id);
+                
+                if($stmt_grupo->execute()){
+                    $mensaje = "¡Registro exitoso y grupo asignado! Redirigiendo al login...";
+                    header("Refresh: 2; url=login.php");
+                } else {
+                    $mensaje = "Registro parcial: Usuario creado pero error al asignar grupo.";
+                }
+                $stmt_grupo->close();
+
             } else {
                 $mensaje = "Error al registrar. Intenta de nuevo.";
             }
@@ -102,6 +123,19 @@ $conn->close();
             <label>Contraseña:</label>
             <input type="password" name="password" placeholder="Elige una contraseña..." required>
 
+            <label>Grupo:</label>
+            <select name="grupo_id" required>
+                <option value="">Selecciona un grupo...</option>
+                <?php 
+                // Recorremos los resultados de la consulta hecha al inicio
+                if ($result_grupos->num_rows > 0) {
+                    while($grupo = $result_grupos->fetch_assoc()) {
+                        echo '<option value="' . $grupo['id'] . '">' . htmlspecialchars($grupo['nombre']) . '</option>';
+                    }
+                }
+                ?>
+            </select>
+
             <label>Sexo:</label>
             <select name="gender" required>
                 <option value="">Selecciona...</option>
@@ -112,7 +146,6 @@ $conn->close();
             <label>Foto (opcional):</label>
             <input type="file" name="foto" accept="image/*">
 
-            <!-- SECCIÓN DE HOBBIES -->
             <div class="hobbies-container">
                 <label><strong>Tus Hobbies/Gustos (máximo 3):</strong></label>
 
