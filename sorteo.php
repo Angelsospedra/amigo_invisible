@@ -7,33 +7,58 @@ if (!isset($_SESSION['admin'])) {
 
 include('conexion.php');
 
-// SOLO se ejecuta si se recibe un POST desde el botón
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("<h3>No puedes acceder directamente a esta página.</h3>
-        <a href='panel_admin.php'>Volver</a>");
+    die("Acceso denegado.");
 }
 
-// Verificar que no exista un sorteo previo
-$check = $conn->query("SELECT COUNT(*) AS total FROM regalos");
-$datos = $check->fetch_assoc();
+$grupo_id = isset($_POST['grupo_id']) ? intval($_POST['grupo_id']) : 0;
 
-if ($datos["total"] > 0) {
-    die("<h3>Ya existe un sorteo guardado. No se puede generar otro.</h3>
-        <a href='panel_admin.php'>Volver</a>");
+if ($grupo_id === 0) {
+    die("Error: No se ha especificado un grupo.");
 }
 
-// Obtener participantes
-$sql = "SELECT id FROM participantes";
-$result = $conn->query($sql);
+// 1. Verificar si YA existe sorteo para ESTE grupo
+// (Importante: la tabla 'regalos' no tiene grupo_id, así que lo inferimos por los participantes)
+$sql_check = "
+    SELECT COUNT(*) AS total 
+    FROM regalos r
+    INNER JOIN participante_grupo pg ON r.id_dador = pg.id_participante
+    WHERE pg.id_grupo = ?
+";
+$stmt = $conn->prepare($sql_check);
+$stmt->bind_param("i", $grupo_id);
+$stmt->execute();
+$check = $stmt->get_result()->fetch_assoc();
+$stmt->close();
+
+if ($check["total"] > 0) {
+    die("<h3>Ya existe un sorteo para este grupo.</h3><a href='panel_admin.php?grupo_id=$grupo_id'>Volver</a>");
+}
+
+// 2. Obtener participantes SOLO del grupo
+$sql = "
+    SELECT p.id 
+    FROM participantes p
+    INNER JOIN participante_grupo pg ON p.id = pg.id_participante
+    WHERE pg.id_grupo = ?
+";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $grupo_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
 $ids = [];
 while ($row = $result->fetch_assoc()) {
     $ids[] = $row['id'];
 }
+$stmt->close();
 
-// FUNCIÓN: generar derangement
-function generarSorteo($ids)
-{
+if (count($ids) < 2) {
+    die("<h3>No hay suficientes participantes en este grupo.</h3><a href='panel_admin.php?grupo_id=$grupo_id'>Volver</a>");
+}
+
+// 3. FUNCIÓN: generar derangement (Tu lógica original estaba bien)
+function generarSorteo($ids) {
     $receptores = $ids;
     do {
         shuffle($receptores);
@@ -45,21 +70,22 @@ function generarSorteo($ids)
             }
         }
     } while (!$valido);
-
     return $receptores;
 }
 
 $receptores = generarSorteo($ids);
 
-// Guardar sorteo
+// 4. Guardar sorteo
+$stmt_ins = $conn->prepare("INSERT INTO regalos (id_dador, id_receptor) VALUES (?, ?)");
+
 foreach ($ids as $i => $dador) {
     $receptor = $receptores[$i];
-
-    $stmt = $conn->prepare("INSERT INTO regalos (id_dador, id_receptor) VALUES (?, ?)");
-    $stmt->bind_param("ii", $dador, $receptor);
-    $stmt->execute();
-    $stmt->close();
+    $stmt_ins->bind_param("ii", $dador, $receptor);
+    $stmt_ins->execute();
 }
+$stmt_ins->close();
 
-echo "<h3>Sorteo generado y guardado correctamente.</h3>
-    <a href='panel_admin.php'>Volver al Panel</a>";
+// Redirigir de vuelta al panel seleccionando el grupo
+header("Location: panel_admin.php?grupo_id=" . $grupo_id);
+exit;
+?>
