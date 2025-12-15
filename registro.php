@@ -68,8 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $nuevo_participante_id = $conn->insert_id;
 
                 // 4. INSERTAR EN LA TABLA INTERMEDIA (participante_grupo)
-                // Asumo que tu tabla tiene columnas: participante_id y grupo_id
-                $stmt_grupo = $conn->prepare("INSERT INTO participante_grupo (participante_id, grupo_id) VALUES (?, ?)");
+                $stmt_grupo = $conn->prepare("INSERT INTO participante_grupo (id_participante, id_grupo) VALUES (?, ?)");
                 $stmt_grupo->bind_param("ii", $nuevo_participante_id, $grupo_id);
                 
                 if($stmt_grupo->execute()){
