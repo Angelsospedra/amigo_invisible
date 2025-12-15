@@ -3,8 +3,6 @@ session_start();
 include("conexion.php");
 
 $mensaje = "";
-
-// Variable para persistir el email si hay error (UX)
 $email_ingresado = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -15,15 +13,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // LOGIN DE ADMINISTRADOR
     // =========================
     if ($tipo === "admin") {
-
-        $admin_pass = "1234"; // Cambiar por tu contraseña real
+        $admin_pass = "1234"; // Recuerda cambiar esto por seguridad
 
         if (isset($_POST['password_admin']) && $_POST['password_admin'] === $admin_pass) {
             $_SESSION['admin'] = true;
             header("Location: panel_admin.php");
             exit;
         } else {
-            // Mensaje genérico para seguridad
             $mensaje = "Usuario o contraseña incorrectas.";
         }
     }
@@ -36,10 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $email = $_POST['email'] ?? "";
         $password = $_POST['password_participante'] ?? "";
         
-        // Guardamos el email para volver a mostrarlo en el input
         $email_ingresado = $email;
 
-        // Buscar usuario por email
+        // Buscamos al usuario por email
         $stmt = $conn->prepare("SELECT * FROM participantes WHERE email = ? LIMIT 1");
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -48,16 +43,45 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($result->num_rows === 1) {
             $usuario = $result->fetch_assoc();
 
-            if (password_verify($password, $usuario['password'])) {
+            // ---------------------------------------------------------
+            // LÓGICA DE SOFT ONBOARDING (Primer acceso)
+            // ---------------------------------------------------------
+            // Si en la BD la contraseña está vacía y el usuario ha escrito una:
+            if (empty($usuario['password']) && !empty($password)) {
+                
+                // Encriptamos la contraseña nueva
+                $new_hash = password_hash($password, PASSWORD_DEFAULT);
+                
+                // Actualizamos el usuario
+                $stmt_update = $conn->prepare("UPDATE participantes SET password = ? WHERE id = ?");
+                $stmt_update->bind_param("si", $new_hash, $usuario['id']);
+                
+                if ($stmt_update->execute()) {
+                    // Si se guarda bien, iniciamos sesión directamente
+                    $_SESSION['participante_id'] = $usuario['id'];
+                    $stmt_update->close();
+                    header("Location: panel.php");
+                    exit;
+                } else {
+                    $mensaje = "Error al guardar tu contraseña inicial.";
+                }
+                $stmt_update->close();
+
+            } 
+            // ---------------------------------------------------------
+            // LOGIN NORMAL (Ya tiene contraseña)
+            // ---------------------------------------------------------
+            elseif (!empty($usuario['password']) && password_verify($password, $usuario['password'])) {
                 $_SESSION['participante_id'] = $usuario['id'];
                 header("Location: panel.php");
                 exit;
-            } else {
-                // Contraseña mal
+            } 
+            else {
                 $mensaje = "Usuario o contraseña incorrectas.";
             }
+
         } else {
-            // Usuario no existe (Mismo mensaje por seguridad)
+            // Usuario no encontrado
             $mensaje = "Usuario o contraseña incorrectas.";
         }
 
@@ -76,17 +100,15 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - Amigo Invisible</title>
     <link rel="stylesheet" href="estilos.css">
-
 </head>
 
 <body>
 
-    <!-- Modal de Error -->
     <div id="errorModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">¡Ho Ho Ho! 🎅</div>
+            <div class="modal-header">¡Ho Ho Ho!</div>
             <div class="modal-body">
-                🎄 Parece que Papá Noel no encuentra tu nombre en la lista... 🎁
+                Parece que Papá Noel no encuentra tu nombre en la lista...
                 <br><br>
                 <strong>Usuario o contraseña incorrectas</strong>
                 <br><br>
@@ -154,6 +176,7 @@ $conn->close();
         // Mostrar modal si hay mensaje de error
         const mensajeError = "<?php echo $mensaje; ?>";
         if (mensajeError) {
+            // IMPORTANTE: Usamos 'flex' para que funcione el centrado del CSS
             document.getElementById("errorModal").style.display = "flex";
         }
 

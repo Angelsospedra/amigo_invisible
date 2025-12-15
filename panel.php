@@ -19,14 +19,11 @@ function obtenerSugerencias($hobbiesArray, $presupuesto, $apiKey) {
     $prompt = "Eres un experto en regalos. " .
               "Persona: le gusta " . $textoHobbies . ". " .
               "Presupuesto maximo: " . $presupuesto . " euros. " .
-              "Genera 3 ideas de regalos originales. " .
+              "Genera 3 ideas de regalos originales basandote en los gustos de esta persona lo más cercano al presupuesto máximo. " .
               "REGLAS OBLIGATORIAS DE FORMATO: " .
               "1. Responde UNICAMENTE con 3 elementos <li> de HTML. " .
               "2. Dentro de cada <li>, pon el nombre del regalo en negrita (<b>). " .
-              "3. Despues del nombre, añade un enlace HTML <a>. " .
-              "4. El enlace debe tener target='_blank' y el href debe ser: https://www.amazon.es/s?k=NOMBRE_DEL_PRODUCTO_CODIFICADO " .
-              "5. El texto del enlace debe ser 'Ver precio'. " .
-              "6. No uses emojis ni markdown.";
+              "3. No uses emojis ni markdown.";
 
     $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . $apiKey;
 

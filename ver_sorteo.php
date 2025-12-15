@@ -27,7 +27,7 @@ if ($fila_grupo = $res_grupo->fetch_assoc()) {
 $stmt_grupo->close();
 
 
-// 2. Consulta filtrada por grupo (He corregido los nombres de las columnas para que coincidan con tu DB anterior: participante_id y grupo_id)
+// 2. Consulta filtrada por grupo 
 $stmt = $conn->prepare("
     SELECT 
         p1.nombre AS dador_nombre,
