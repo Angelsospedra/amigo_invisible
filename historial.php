@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['admin'])) {
+    die("Acceso denegado.");
+}
+
 include 'conexion.php';
 
 // Primero, verificar si la tabla regalos tiene columna fecha_registro
