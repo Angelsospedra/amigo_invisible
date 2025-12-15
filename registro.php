@@ -62,7 +62,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt2->bind_param("sssssss", $nombre, $apellido, $email, $password_hash, $gender, $foto_nombre, $hobbies_json);
 
             if ($stmt2->execute()) {
+                $id_nuevo = $conn->insert_id;
                 
+                // Obtener el ID del grupo
+                $stmtGrupo = $conn->prepare("SELECT id FROM grupos WHERE nombre = ?");
+                $stmtGrupo->bind_param("s", $grupo);
+                $stmtGrupo->execute();
+                $resultGrupo = $stmtGrupo->get_result();
+                
+                if ($resultGrupo->num_rows > 0) {
+                    $filaGrupo = $resultGrupo->fetch_assoc();
+                    $id_grupo = $filaGrupo['id'];
+                    
+                    // Insertar relación participante-grupo
+                    $stmtRelacion = $conn->prepare("INSERT INTO participante_grupo (id_participante, id_grupo) VALUES (?, ?)");
+                    $stmtRelacion->bind_param("ii", $id_nuevo, $id_grupo);
+                    $stmtRelacion->execute();
+                    $stmtRelacion->close();
+                }
+                $stmtGrupo->close();
+                
+
                 // 3. RECUPERAR EL ID DEL USUARIO RECIÉN CREADO
                 // Esta función devuelve el ID autoincremental de la última consulta INSERT
                 $nuevo_participante_id = $conn->insert_id;

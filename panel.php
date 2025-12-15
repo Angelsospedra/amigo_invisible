@@ -91,6 +91,18 @@ if ($result->num_rows === 0) {
 
 $usuario = $result->fetch_assoc();
 
+// Obtener el grupo del usuario
+$stmtGrupo = $conn->prepare("
+    SELECT g.nombre FROM grupos g
+    JOIN participante_grupo pg ON g.id = pg.id_grupo
+    WHERE pg.id_participante = ?
+");
+$stmtGrupo->bind_param("i", $id);
+$stmtGrupo->execute();
+$resultGrupo = $stmtGrupo->get_result();
+$usuarioGrupo = $resultGrupo->fetch_assoc();
+$stmtGrupo->close();
+
 $hobbies = [];
 if (!empty($usuario['hobbies'])) {
     $hobbies = json_decode($usuario['hobbies'], true);
@@ -147,6 +159,8 @@ $conn->close();
 
     <h2>Bienvenido/a, <?php echo htmlspecialchars($usuario['nombre']); ?></h2>
 
+    <p id="countdown" class="countdown-timer"></p>
+
     <img src="fotos/<?php echo htmlspecialchars($usuario['foto']); ?>" class="foto-perfil">
 
     <!-- BOTONES DE NAVEGACIÓN ARRIBA -->
@@ -163,6 +177,7 @@ $conn->close();
         <p><strong>Apellido:</strong> <?php echo htmlspecialchars($usuario['apellido']); ?></p>
         <p><strong>Email:</strong> <?php echo htmlspecialchars($usuario['email']); ?></p>
         <p><strong>Sexo:</strong> <?php echo htmlspecialchars($usuario['gender']); ?></p>
+        <p><strong>Grupo:</strong> <?php echo !empty($usuarioGrupo['nombre']) ? htmlspecialchars($usuarioGrupo['nombre']) : 'No asignado'; ?></p>
 
         <?php if (!empty($hobbies)): ?>
             <p><strong>Tus Hobbies/Gustos:</strong></p>
@@ -217,6 +232,28 @@ $conn->close();
             <p>Aún no se ha realizado el sorteo.</p>
         </div>
     <?php endif; ?>
+
+    <script>
+        // Timer de cuenta atrás
+        var countDownDate = new Date("Dec 22, 2025 14:00:00").getTime();
+
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = "Quedan: " + days + " dias, " + hours + " horas, " + minutes + " min, " + seconds + "segs";
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "¡El sorteo ha finalizado!";
+            }
+        }, 1000);
+    </script>
 
 </body>
 </html>

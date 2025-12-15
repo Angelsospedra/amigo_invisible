@@ -59,6 +59,24 @@ if ($stmt->execute()) {
     // Guardamos el ID recién insertado
     $id_nuevo = $conn->insert_id;
 
+    // Obtener el ID del grupo
+    $stmtGrupo = $conn->prepare("SELECT id FROM grupos WHERE nombre = ?");
+    $stmtGrupo->bind_param("s", $grupo);
+    $stmtGrupo->execute();
+    $resultGrupo = $stmtGrupo->get_result();
+    
+    if ($resultGrupo->num_rows > 0) {
+        $filaGrupo = $resultGrupo->fetch_assoc();
+        $id_grupo = $filaGrupo['id'];
+        
+        // Insertar relación participante-grupo
+        $stmtRelacion = $conn->prepare("INSERT INTO participante_grupo (id_participante, id_grupo) VALUES (?, ?)");
+        $stmtRelacion->bind_param("ii", $id_nuevo, $id_grupo);
+        $stmtRelacion->execute();
+        $stmtRelacion->close();
+    }
+    $stmtGrupo->close();
+
     // Iniciar sesión automáticamente
     session_start();
     $_SESSION['participante_id'] = $id_nuevo;

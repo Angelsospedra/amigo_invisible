@@ -22,15 +22,6 @@ if ($datos["total"] > 0) {
         <a href='panel_admin.php'>Volver</a>");
 }
 
-// Obtener participantes
-$sql = "SELECT id FROM participantes";
-$result = $conn->query($sql);
-
-$ids = [];
-while ($row = $result->fetch_assoc()) {
-    $ids[] = $row['id'];
-}
-
 // FUNCIÓN: generar derangement
 function generarSorteo($ids)
 {
@@ -49,17 +40,50 @@ function generarSorteo($ids)
     return $receptores;
 }
 
-$receptores = generarSorteo($ids);
-
-// Guardar sorteo
-foreach ($ids as $i => $dador) {
-    $receptor = $receptores[$i];
-
-    $stmt = $conn->prepare("INSERT INTO regalos (id_dador, id_receptor) VALUES (?, ?)");
-    $stmt->bind_param("ii", $dador, $receptor);
-    $stmt->execute();
-    $stmt->close();
+// Obtener todos los grupos
+$gruposQuery = $conn->query("SELECT id, nombre FROM grupos");
+$grupos = [];
+while ($row = $gruposQuery->fetch_assoc()) {
+    $grupos[] = $row;
 }
 
-echo "<h3>Sorteo generado y guardado correctamente.</h3>
-    <a href='panel_admin.php'>Volver al Panel</a>";
+// Realizar sorteo por cada grupo
+$totalGrupos = count($grupos);
+$gruposExitosos = 0;
+
+foreach ($grupos as $grupo) {
+    // Obtener participantes del grupo
+    $sql = "SELECT p.id FROM participantes p
+            JOIN participante_grupo pg ON p.id = pg.id_participante
+            WHERE pg.id_grupo = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $grupo['id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $ids = [];
+    while ($row = $result->fetch_assoc()) {
+        $ids[] = $row['id'];
+    }
+    $stmt->close();
+    
+    // Si hay al menos 2 participantes en el grupo, hacer sorteo
+    if (count($ids) >= 2) {
+        $receptores = generarSorteo($ids);
+        
+        // Guardar sorteo para este grupo
+        foreach ($ids as $i => $dador) {
+            $receptor = $receptores[$i];
+            
+            $stmtInsert = $conn->prepare("INSERT INTO regalos (id_dador, id_receptor) VALUES (?, ?)");
+            $stmtInsert->bind_param("ii", $dador, $receptor);
+            $stmtInsert->execute();
+            $stmtInsert->close();
+        }
+        $gruposExitosos++;
+    }
+}
+
+echo "<h3>Sorteo generado y guardado correctamente.</h3>";
+echo "<p>Grupos procesados: <strong>" . $gruposExitosos . "</strong> de <strong>" . $totalGrupos . "</strong></p>";
+echo "<a href='panel_admin.php'>Volver al Panel</a>";
