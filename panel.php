@@ -163,6 +163,8 @@ $conn->close();
         .resultados-ia li { margin-bottom: 10px; font-size: 0.95em; line-height: 1.5; }
         .resultados-ia a { display: inline-block; margin-left: 8px; font-size: 0.85em; color: #d35400; text-decoration: underline; font-weight: bold; }
         .resultados-ia a:hover { color: #e67e22; }
+        .btn-anchor { display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: #196c2fff; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; }
+        
     </style>
 </head>
 
@@ -186,10 +188,14 @@ $conn->close();
                 <?php endforeach; ?>
             </ul>
         <?php endif; ?>
+
+        <?php if ($asignado): ?>
+            <a href="#amigo-invisible" class="btn-anchor">Ver mi amigo invisible</a>
+        <?php endif; ?>
     </div>
 
     <?php if ($asignado): ?>
-        <div class="sorteo-info">
+        <div class="sorteo-info" id="amigo-invisible">
             <h3>Tu Amigo Invisible es:</h3>
             <img src="fotos/<?php echo htmlspecialchars($asignado['foto']); ?>" class="asignado-foto">
             <p><strong><?php echo htmlspecialchars($asignado['nombre'] . " " . $asignado['apellido']); ?></strong></p>
