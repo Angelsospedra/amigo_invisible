@@ -84,21 +84,21 @@ $conn->close();
     <!-- Modal de Error -->
     <div id="errorModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">🎅 ¡Ho Ho Ho! 🎅</div>
+            <div class="modal-header">¡Ho Ho Ho! 🎅</div>
             <div class="modal-body">
                 🎄 Parece que Papá Noel no encuentra tu nombre en la lista... 🎁
                 <br><br>
                 <strong>Usuario o contraseña incorrectas</strong>
                 <br><br>
-                ❄️ ¡Inténtalo de nuevo! ⛄
+                ¡Inténtalo de nuevo!
             </div>
-            <button class="close-modal" onclick="cerrarModal()">🎄 Entendido 🎄</button>
+            <button class="close-modal" onclick="cerrarModal()">Entendido</button>
         </div>
     </div>
 
     <div class="container">
 
-        <h2>Amigo Invisible 🎄</h2>
+        <h2>Amigo Invisible</h2>
 
         <form method="POST">
 
@@ -152,11 +152,8 @@ $conn->close();
         }
 
         // Mostrar modal si hay mensaje de error
-       // Mostrar modal si hay mensaje de error
         const mensajeError = "<?php echo $mensaje; ?>";
         if (mensajeError) {
-            // CAMBIO IMPORTANTE: Usamos 'flex' en lugar de 'block'
-            // Esto respeta el align-items y justify-content del CSS
             document.getElementById("errorModal").style.display = "flex";
         }
 

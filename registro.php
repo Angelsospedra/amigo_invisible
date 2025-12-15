@@ -57,8 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt2->bind_param("sssssss", $nombre, $apellido, $email, $password_hash, $gender, $foto_nombre, $hobbies_json);
 
             if ($stmt2->execute()) {
-                $mensaje = "¡Registro exitoso! Ahora puedes iniciar sesión.";
-                // Redirigir después de 2 segundos
+                $mensaje = "¡Registro exitoso! Redirigiendo al login...";
                 header("Refresh: 2; url=login.php");
             } else {
                 $mensaje = "Error al registrar. Intenta de nuevo.";
@@ -80,104 +79,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Registro</title>
-    <style>
-        body {
-            font-family: Arial;
-            margin: 20px;
-        }
-
-        .container {
-            width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 12px;
-            box-sizing: border-box;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-
-        .hobbies-container {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 4px;
-        }
-
-        .hobby-input {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .hobby-input input {
-            flex: 1;
-            margin-bottom: 0;
-        }
-
-        .btn-remove {
-            background-color: #dc3545;
-            width: auto;
-            padding: 8px 15px;
-            margin-bottom: 0;
-        }
-
-        .btn-remove:hover {
-            background-color: #c82333;
-        }
-
-        .btn-add-hobby {
-            background-color: #17a2b8;
-            margin-top: 10px;
-        }
-
-        .btn-add-hobby:hover {
-            background-color: #138496;
-        }
-
-        .mensaje {
-            color: green;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #d4edda;
-            border-radius: 4px;
-        }
-
-        .mensaje.error {
-            color: red;
-            background-color: #f8d7da;
-        }
-
-        a {
-            display: block;
-            margin-top: 15px;
-            text-align: center;
-            color: #007bff;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
@@ -189,16 +91,16 @@ $conn->close();
         <form method="POST" enctype="multipart/form-data">
 
             <label>Nombre:</label>
-            <input type="text" name="nombre" required>
+            <input type="text" name="nombre" placeholder="Tu nombre..." required>
 
             <label>Apellido:</label>
-            <input type="text" name="apellido" required>
+            <input type="text" name="apellido" placeholder="Tu apellido..." required>
 
             <label>Email:</label>
-            <input type="email" name="email" required>
+            <input type="email" name="email" placeholder="tu@email.com" required>
 
             <label>Contraseña:</label>
-            <input type="password" name="password" required>
+            <input type="password" name="password" placeholder="Elige una contraseña..." required>
 
             <label>Sexo:</label>
             <select name="gender" required>
@@ -229,12 +131,14 @@ $conn->close();
         </form>
 
         <?php if ($mensaje): ?>
-            <p class="mensaje <?php echo strpos($mensaje, 'Error') !== false ? 'error' : ''; ?>">
+            <p class="mensaje <?php echo (strpos($mensaje, 'Error') !== false || strpos($mensaje, 'registrado') !== false) ? 'error' : 'success'; ?>">
                 <?php echo $mensaje; ?>
             </p>
         <?php endif; ?>
 
-        <a href="login.php">¿Ya tienes cuenta? Inicia sesión</a>
+        <div class="login-link">
+            ¿Ya tienes cuenta? <a href="login.php">Inicia sesión aquí</a>
+        </div>
 
     </div>
 

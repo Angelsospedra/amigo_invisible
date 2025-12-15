@@ -9,8 +9,8 @@ include('conexion.php');
 
 // SOLO se ejecuta si se recibe un POST desde el botón
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("<h3>No puedes acceder directamente a esta página.</h3>
-        <a href='panel_admin.php'>Volver</a>");
+    header("Location: panel_admin.php");
+    exit;
 }
 
 // Eliminar sorteo anterior
@@ -54,9 +54,35 @@ foreach ($ids as $i => $dador) {
     $stmt->execute();
     $stmt->close();
 }
-//Comment
-$conn->close();
 
-echo "<h3>✓ Sorteo regenerado correctamente.</h3>
-    <a href='panel_admin.php'><button style='padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;'>Volver al Panel</button></a>";
+$conn->close();
 ?>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteo Regenerado</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Sorteo Regenerado</h2>
+        
+        <div class="mensaje success">
+            ✓ El sorteo se ha regenerado correctamente. Todos los participantes tienen nuevas asignaciones.
+        </div>
+
+        <div style="margin-top: 30px; text-align: center; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a href="panel_admin.php"><button>Volver al Panel</button></a>
+            <a href="ver_sorteo.php"><button>Ver Nuevo Sorteo</button></a>
+        </div>
+    </div>
+
+</body>
+
+</html>

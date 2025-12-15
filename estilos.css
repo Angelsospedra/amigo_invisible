@@ -1,8 +1,3 @@
-/* ============================================
-   ESTILOS GENERALES - AMIGO INVISIBLE
-   Diseño: Navideño elegante (Rojo, Verde, Dorado)
-   ============================================ */
-
 * {
   margin: 0;
   padding: 0;
@@ -45,9 +40,9 @@ body::before {
   }
 }
 
-/* ============================================
+/*
    CONTENEDOR PRINCIPAL
-   ============================================ */
+*/
 
 .container,
 .form-container,
@@ -88,9 +83,9 @@ body::before {
   text-shadow: 0 0 10px rgba(218, 165, 32, 0.8);
 }
 
-/* ============================================
+/*
    TÍTULOS
-   ============================================ */
+*/
 
 h2 {
   text-align: center;
@@ -109,9 +104,9 @@ h3 {
   padding-bottom: 8px;
 }
 
-/* ============================================
+/*
    FORMULARIOS
-   ============================================ */
+*/
 
 fieldset {
   border: 2px solid rgba(218, 165, 32, 0.3);
@@ -217,9 +212,9 @@ input[type="radio"] {
   color: rgba(240, 230, 210, 0.5);
 }
 
-/* ============================================
+/*
    BOTONES
-   ============================================ */
+*/
 
 button,
 input[type="submit"] {
@@ -287,9 +282,9 @@ button[type="button"]:hover {
   background: linear-gradient(135deg, #2d673e 0%, #3d7f50 100%);
 }
 
-/* ============================================
+/*
    BOTONES DE COLORES (Admin)
-   ============================================ */
+*/
 
 button[style*="background:red"],
 button[style*="background: red"] {
@@ -325,9 +320,9 @@ button[style*="background: orange"]:hover {
   background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%) !important;
 }
 
-/* ============================================
+/*
    MENSAJES
-   ============================================ */
+ */
 
 .mensaje {
   padding: 12px 15px;
@@ -360,9 +355,9 @@ button[style*="background: orange"]:hover {
   }
 }
 
-/* ============================================
+/*
    ENLACES
-   ============================================ */
+  */
 
 a {
   color: #daa520;
@@ -407,9 +402,9 @@ a.nav-link:hover {
   box-shadow: 0 4px 15px rgba(27, 83, 44, 0.5);
 }
 
-/* ============================================
+/*
    FOTO DE PERFIL
-   ============================================ */
+   */
 
 .perfil-foto,
 .foto-perfil {
@@ -434,9 +429,9 @@ a.nav-link:hover {
   box-shadow: 0 4px 12px rgba(218, 165, 32, 0.4);
 }
 
-/* ============================================
+/*
    TARJETAS DE PERFIL
-   ============================================ */
+  */
 
 .perfil-card,
 .sorteo-info {
@@ -471,9 +466,9 @@ a.nav-link:hover {
   color: #daa520;
 }
 
-/* ============================================
+/*
    HOBBIES
-   ============================================ */
+  */
 
 .hobbies-container {
   background: rgba(0, 0, 0, 0.3);
@@ -524,9 +519,9 @@ a.nav-link:hover {
   border: 1px solid rgba(218, 165, 32, 0.3);
 }
 
-/* ============================================
+/* 
    SECCIÓN IA
-   ============================================ */
+  */
 
 .ai-section {
   margin-top: 20px;
@@ -595,9 +590,9 @@ a.nav-link:hover {
   color: #ffa500;
 }
 
-/* ============================================
+/*
    PANEL ADMIN - PARTICIPANTES
-   ============================================ */
+ */
 
 .participante {
   display: flex;
@@ -641,9 +636,9 @@ a.nav-link:hover {
   font-size: 14px;
 }
 
-/* ============================================
+/*
    TABLA DE ADMIN
-   ============================================ */
+*/
 
 table {
   width: 100%;
@@ -687,9 +682,9 @@ td img {
   border: 2px solid #daa520;
 }
 
-/* ============================================
+/*
    BOTONES PEQUEÑOS EN TABLAS
-   ============================================ */
+*/
 
 .btn-small {
   padding: 6px 12px;
@@ -699,18 +694,18 @@ td img {
   margin: 2px;
 }
 
-/* ============================================
+/*
    CAMPOS OCULTOS (para JS)
-   ============================================ */
+*/
 
 #admin-fields,
 #participante-fields {
   transition: all 0.3s ease;
 }
 
-/* ============================================
+/*
    SEPARADOR DECORATIVO
-   ============================================ */
+*/
 
 hr {
   border: none;
@@ -725,9 +720,9 @@ hr {
   box-shadow: 0 1px 3px rgba(218, 165, 32, 0.3);
 }
 
-/* ============================================
+/*
    VISTA DE SORTEO
-   ============================================ */
+*/
 
 .sorteo-row {
   display: flex;
@@ -763,9 +758,9 @@ hr {
   color: #daa520;
 }
 
-/* ============================================
+/*
    LINKS NAVEGACIÓN
-   ============================================ */
+*/
 
 .links {
   margin-top: 30px;
@@ -773,9 +768,9 @@ hr {
   text-align: center;
 }
 
-/* ============================================
+/*
    RESPONSIVE
-   ============================================ */
+*/
 
 @media (max-width: 768px) {
   .container,
@@ -817,9 +812,9 @@ hr {
   }
 }
 
-/* ============================================
+/*
    ANIMACIONES EXTRA
-   ============================================ */
+*/
 
 @keyframes fadeIn {
   from {
@@ -838,9 +833,9 @@ hr {
   animation: fadeIn 0.5s ease;
 }
 
-/* ============================================
+/*
    UTILIDADES
-   ============================================ */
+*/
 
 .text-center {
   text-align: center;
@@ -868,194 +863,11 @@ body {
   padding: 20px 0;
 }
 
-/* Historial */
-.filter-section {
-  margin: 20px 0;
-  padding: 15px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-}
 
-.filter-section select {
-  padding: 10px 15px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #d32f2f;
-  color: white;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
 
-.filter-section select:hover {
-  background-color: #b71c1c;
-}
-
-.filter-section select option {
-  background-color: white;
-  color: black;
-}
-
-.historial-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.historial-table thead {
-  background-color: #d32f2f;
-  color: white;
-}
-
-.historial-table th,
-.historial-table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.historial-table tbody tr:hover {
-  background-color: #f9f9f9;
-}
-
-.no-data {
-  text-align: center;
-  padding: 20px;
-  color: #666;
-  font-style: italic;
-}
-
-.btn-back {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 15px;
-  background-color: #d32f2f;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-.btn-back:hover {
-  background-color: #b71c1c;
-}
-.arrow {
-  text-align: center;
-  font-weight: bold;
-  color: #d32f2f;
-}
-
-.historial-table td:nth-child(1),
-.historial-table td:nth-child(3) {
-  font-weight: 500;
-}
-.filter-section {
-  margin: 20px 0;
-  padding: 15px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.filter-section form {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.filter-section label {
-  font-weight: bold;
-  color: #333;
-}
-
-.filter-section select {
-  padding: 10px 15px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #d32f2f;
-  color: white;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.btn-filter {
-  padding: 8px 16px;
-  background-color: #d32f2f;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.btn-filter:hover {
-  background-color: #b71c1c;
-}
-
-.historial-section {
-  margin-top: 30px;
-}
-
-.historial-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.historial-table thead {
-  background-color: #d32f2f;
-  color: white;
-}
-
-.historial-table th,
-.historial-table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.historial-table tbody tr:hover {
-  background-color: #f9f9f9;
-}
-
-.arrow {
-  text-align: center;
-  font-weight: bold;
-  color: #d32f2f;
-}
-
-.no-data {
-  text-align: center;
-  padding: 20px;
-  color: #666;
-  font-style: italic;
-}
-
-.btn-back {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 15px;
-  background-color: #d32f2f;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.btn-back:hover {
-  background-color: #b71c1c;
-}
-
-/* ============================================
+/*
    MODAL DE ERROR - LOGIN
-   ============================================ */
+*/
 
 .modal {
     display: none; /* Por defecto oculto, JS lo activará a 'flex' */
@@ -1195,5 +1007,193 @@ body {
     
     .modal-body {
         font-size: 15px;
+    }
+}
+
+/*
+   BOTONES DE NAVEGACIÓN (arriba del perfil)
+  */
+
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px auto 5px;
+    flex-wrap: wrap;
+    max-width: 600px;
+}
+
+/* 
+   RESULTADOS IA - MEJORADOS
+   */
+
+.resultados-ia {
+    text-align: left;
+    background: linear-gradient(145deg, rgba(27, 83, 44, 0.25), rgba(45, 103, 62, 0.15));
+    border: 2px solid rgba(218, 165, 32, 0.5);
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.resultados-ia h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #DAA520;
+    font-size: 1.1em;
+    text-align: center;
+    border-bottom: 2px solid rgba(218, 165, 32, 0.3);
+    padding-bottom: 10px;
+}
+
+.resultados-ia ul {
+    padding-left: 25px;
+    margin-bottom: 0;
+}
+
+.resultados-ia li {
+    margin-bottom: 15px;
+    font-size: 0.95em;
+    line-height: 1.7;
+    color: #f0e6d2;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #DAA520;
+}
+
+.resultados-ia li b {
+    color: #FFD700;
+    font-size: 1.05em;
+}
+
+.resultados-ia a {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 4px 12px;
+    font-size: 0.85em;
+    color: #000;
+    background: linear-gradient(135deg, #DAA520 0%, #FFD700 100%);
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.resultados-ia a:hover {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(218, 165, 32, 0.5);
+}
+
+/*
+   FILTRO DE AÑO - HISTORIAL
+   */
+
+.filter-section {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid rgba(218, 165, 32, 0.3);
+    text-align: center;
+}
+
+.filter-section form {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.filter-section label {
+    color: #DAA520;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0;
+}
+
+.filter-section select {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid rgba(218, 165, 32, 0.4);
+    border-radius: 8px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.4);
+    color: #f5f5f5;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.filter-section select:hover {
+    border-color: #DAA520;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.filter-section select:focus {
+    outline: none;
+    border-color: #FFD700;
+    box-shadow: 0 0 15px rgba(218, 165, 32, 0.4);
+}
+
+/*
+   OPTIONS DE SELECT - MEJORADO
+  */
+
+select option {
+    background: rgba(139, 0, 0, 0.95) !important;
+    color: #f5f5f5 !important;
+    padding: 10px;
+    font-weight: 500;
+}
+
+select option:hover {
+    background: rgba(27, 83, 44, 0.95) !important;
+    color: #FFD700 !important;
+}
+
+select option:checked {
+    background: rgba(27, 83, 44, 0.95) !important;
+    color: #FFD700 !important;
+    font-weight: 700;
+}
+
+/*
+   LISTA DE HISTORIAL
+  */
+
+.historial-list {
+    margin-top: 20px;
+}
+
+.no-data {
+    text-align: center;
+    padding: 30px;
+    color: #cbd5e1;
+    font-style: italic;
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    border: 1px solid rgba(218, 165, 32, 0.2);
+    margin: 20px 0;
+}
+
+/*
+   ESTILOS RESPONSIVE PARA HISTORIAL
+   */
+
+@media (max-width: 768px) {
+    .filter-section form {
+        flex-direction: column;
+    }
+    
+    .filter-section select {
+        width: 100%;
+    }
+    
+    .nav-buttons {
+        gap: 10px;
     }
 }

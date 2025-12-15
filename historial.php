@@ -42,8 +42,8 @@ $result_regalos = $conn->query($query_regalos);
 </head>
 
 <body>
-    <div class="container">
-        <h1>Historial Amigo Invisible</h1>
+    <div class="container admin-panel">
+        <h2>Historial Amigo Invisible</h2>
 
         <div class="filter-section">
             <form method="GET" action="historial.php">
@@ -64,44 +64,36 @@ $result_regalos = $conn->query($query_regalos);
             </form>
         </div>
 
-        <div class="historial-section">
-            <h2>Año: <?php echo $año_seleccionado; ?></h2>
+        <h3>Año: <?php echo $año_seleccionado; ?></h3>
 
-            <?php if ($result_regalos && $result_regalos->num_rows > 0) { ?>
-                <table class="historial-table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Quien Regala</th>
-                            <th>➜</th>
-                            <th></th>
-                            <th>Quien Recibe</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = $result_regalos->fetch_assoc()) { ?>
-                            <tr>
-                                <td class="foto-cell">
-                                    <img src="fotos/<?php echo htmlspecialchars($row['foto_dador']); ?>"
-                                        alt="<?php echo htmlspecialchars($row['dador']); ?>" class="foto-historial">
-                                </td>
-                                <td><?php echo htmlspecialchars($row['dador'] . ' ' . $row['apellido_dador']); ?></td>
-                                <td class="arrow">→</td>
-                                <td class="foto-cell">
-                                    <img src="fotos/<?php echo htmlspecialchars($row['foto_receptor']); ?>"
-                                        alt="<?php echo htmlspecialchars($row['receptor']); ?>" class="foto-historial">
-                                </td>
-                                <td><?php echo htmlspecialchars($row['receptor'] . ' ' . $row['apellido_receptor']); ?></td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            <?php } else { ?>
-                <p class="no-data">No hay asignaciones registradas para el año <?php echo $año_seleccionado; ?></p>
-            <?php } ?>
+        <?php if ($result_regalos && $result_regalos->num_rows > 0) { ?>
+            <div class="historial-list">
+                <?php while ($row = $result_regalos->fetch_assoc()) { ?>
+                    <div class="sorteo-row">
+                        <div class="sorteo-persona">
+                            <img src="fotos/<?php echo htmlspecialchars($row['foto_dador']); ?>" 
+                                 alt="<?php echo htmlspecialchars($row['dador']); ?>">
+                            <span><?php echo htmlspecialchars($row['dador'] . ' ' . $row['apellido_dador']); ?></span>
+                        </div>
+
+                        <span class="sorteo-flecha">→</span>
+
+                        <div class="sorteo-persona">
+                            <img src="fotos/<?php echo htmlspecialchars($row['foto_receptor']); ?>" 
+                                 alt="<?php echo htmlspecialchars($row['receptor']); ?>">
+                            <span><?php echo htmlspecialchars($row['receptor'] . ' ' . $row['apellido_receptor']); ?></span>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        <?php } else { ?>
+            <p class="no-data">No hay asignaciones registradas para el año <?php echo $año_seleccionado; ?></p>
+        <?php } ?>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="ver_sorteo.php"><button>← Volver al sorteo actual</button></a>
+            <a href="panel_admin.php"><button>Volver al Panel</button></a>
         </div>
-
-        <a href="ver_sorteo.php" class="btn-back">← Volver al sorteo actual</a>
     </div>
 </body>
 

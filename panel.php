@@ -2,13 +2,10 @@
 session_start();
 
 // --- 1. CARGA SEGURA DE LA API KEY ---
-// Buscamos si existe el archivo de configuración externo
 if (file_exists('config_api.php')) {
     include('config_api.php');
 }
 
-// Si por alguna razón el archivo no existe o no se definió la constante,
-// definimos una por defecto vacía para evitar errores fatales en PHP.
 if (!defined('GEMINI_API_KEY')) {
     define('GEMINI_API_KEY', '');
 }
@@ -31,7 +28,6 @@ function obtenerSugerencias($hobbiesArray, $presupuesto, $apiKey) {
               "5. El texto del enlace debe ser 'Ver precio'. " .
               "6. No uses emojis ni markdown.";
 
-    // Usamos el modelo estable
     $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . $apiKey;
 
     $data = [
@@ -120,19 +116,14 @@ if ($result2->num_rows > 0) {
     }
 }
 
-// --- PROCESAMIENTO DEL FORMULARIO CON SEGURIDAD ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['pedir_ayuda'])) {
     if ($asignado) {
         $presupuesto = floatval($_POST['presupuesto']);
-        
-        // AQUI ESTA LA MAGIA: Leemos la constante del archivo externo
         $miApiKey = GEMINI_API_KEY; 
 
-        // Verificamos que la key no esté vacía ni sea el texto de ejemplo
         if ($presupuesto > 0 && !empty($miApiKey) && $miApiKey !== 'PEGA_AQUI_TU_NUEVA_API_KEY_SIN_ESPACIOS') {
             $sugerencias = obtenerSugerencias($hobbies_asignado, $presupuesto, $miApiKey);
         } else {
-            // Mensaje de error amigable para el equipo de desarrollo
             $sugerencias = "<li>Error de Configuración: Crea el archivo 'config_api.php' y pon la API Key correcta.</li>";
         }
     }
@@ -150,22 +141,6 @@ $conn->close();
     <meta charset="UTF-8">
     <title>Mi Perfil</title>
     <link rel="stylesheet" href="estilos.css">
-    <style>
-        /* Estilos inline para asegurar que la sección nueva se vea bien si no has actualizado estilos.css */
-        .ai-section { margin-top: 20px; border-top: 2px dashed #ccc; padding-top: 15px; }
-        .ai-form { display: flex; justify-content: center; align-items: center; gap: 5px; margin-bottom: 15px; }
-        .ai-form input { padding: 5px; border: 1px solid #ccc; border-radius: 4px; width: 70px; }
-        .btn-ia { background-color: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .btn-ia:hover { background-color: #218838; }
-        .resultados-ia { text-align: left; background-color: #f9fff9; border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px; }
-        .resultados-ia h4 { margin-top: 0; color: #155724; font-size: 0.9em; }
-        .resultados-ia ul { padding-left: 20px; margin-bottom: 0; }
-        .resultados-ia li { margin-bottom: 10px; font-size: 0.95em; line-height: 1.5; }
-        .resultados-ia a { display: inline-block; margin-left: 8px; font-size: 0.85em; color: #d35400; text-decoration: underline; font-weight: bold; }
-        .resultados-ia a:hover { color: #e67e22; }
-        .btn-anchor { display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: #196c2fff; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; }
-        
-    </style>
 </head>
 
 <body>
@@ -173,6 +148,15 @@ $conn->close();
     <h2>Bienvenido/a, <?php echo htmlspecialchars($usuario['nombre']); ?></h2>
 
     <img src="fotos/<?php echo htmlspecialchars($usuario['foto']); ?>" class="foto-perfil">
+
+    <!-- BOTONES DE NAVEGACIÓN ARRIBA -->
+    <div class="nav-buttons">
+        <a href="editar_perfil.php" class="nav-link">Editar Perfil</a>
+        <?php if ($asignado): ?>
+            <a href="#amigo-invisible" class="nav-link">Ver Amigo Invisible</a>
+        <?php endif; ?>
+        <a href="logout_participante.php" class="nav-link">Cerrar Sesión</a>
+    </div>
 
     <div class="contenedor">
         <p><strong>Nombre:</strong> <?php echo htmlspecialchars($usuario['nombre']); ?></p>
@@ -187,10 +171,6 @@ $conn->close();
                     <li><?php echo htmlspecialchars($hobby); ?></li>
                 <?php endforeach; ?>
             </ul>
-        <?php endif; ?>
-
-        <?php if ($asignado): ?>
-            <a href="#amigo-invisible" class="btn-anchor">Ver mi amigo invisible</a>
         <?php endif; ?>
     </div>
 
@@ -209,7 +189,7 @@ $conn->close();
                 </ul>
 
                 <div class="ai-section">
-                    <p style="font-weight: bold; margin-bottom: 5px; color: #DAA520;">¿No sabes que regalar?</p>
+                    <p style="font-weight: bold; margin-bottom: 10px; color: #DAA520; text-align: center;">¿No sabes qué regalar?</p>
                     
                     <form method="POST" class="ai-form">
                         <label for="presupuesto">Max euros:</label>
@@ -221,7 +201,7 @@ $conn->close();
 
                     <?php if (!empty($sugerencias)): ?>
                         <div class="resultados-ia">
-                            <h4>Sugerencias:</h4>
+                            <h4>💡 Sugerencias de Regalos:</h4>
                             <ul>
                                 <?php echo $sugerencias; ?>
                             </ul>
@@ -229,19 +209,14 @@ $conn->close();
                     <?php endif; ?>
                 </div>
             <?php else: ?>
-                <p><em>Este usuario no ha indicado hobbies, sera mas dificil elegir regalo...</em></p>
+                <p><em>Este usuario no ha indicado hobbies, será más difícil elegir regalo...</em></p>
             <?php endif; ?>
         </div>
     <?php else: ?>
         <div class="sorteo-info">
-            <p>Aun no se ha realizado el sorteo.</p>
+            <p>Aún no se ha realizado el sorteo.</p>
         </div>
     <?php endif; ?>
-
-    <div class="links">
-        <a href="editar_perfil.php" class="nav-link">Editar Perfil</a>
-        <a href="logout_participante.php" class="nav-link">Cerrar sesion</a>
-    </div>
 
 </body>
 </html>
